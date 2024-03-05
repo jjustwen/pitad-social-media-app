@@ -90,55 +90,6 @@ public class RegisterActivity extends AppCompatActivity {
                 } else {
                     RegisterUser(str_username, str_fullname, str_email, str_password);
                 }
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String str_username = username.getText().toString();
-//                String str_fullname = fullname.getText().toString();
-//                String str_email = email.getText().toString();
-//                String str_password = password.getText().toString();
-//
-//                auth = FirebaseAuth.getInstance();
-//                db = FirebaseFirestore.getInstance();
-//                auth.createUserWithEmailAndPassword(str_email,str_password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<AuthResult> task) {
-//                        if(task.isSuccessful()){
-//
-//                            FirebaseUser firebaseUser = auth.getCurrentUser();
-//                            String userid = firebaseUser.getUid();
-//
-//                            HashMap<String, Object> hashMap = new HashMap<>();
-//                            hashMap.put("id", userid);
-//                            hashMap.put("username", str_username);
-//                            hashMap.put("fullname", str_fullname);
-//                            hashMap.put("bio", "");
-//                            hashMap.put("imageurl", "default");
-//
-//                            db.collection("Users").document(userid)
-//                                    .set(hashMap)
-//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    if (task.isSuccessful()) {
-//                                        pd.dismiss();
-//                                        Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-//                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                        startActivity(intent);
-//                                    }
-//                                }
-//                            });
-//
-//                            Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
-//                        }
-//                        else{
-//                            Toast.makeText(RegisterActivity.this,"Đăng ký không thành công", Toast.LENGTH_LONG).show();
-//                        }
-//                    }
-//                });
-//
-//            }
-//        });
             }
         });
     }
