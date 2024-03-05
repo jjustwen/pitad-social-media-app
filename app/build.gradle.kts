@@ -50,9 +50,10 @@ dependencies {
     implementation ("de.hdodenhof:circleimageview:3.0.1")
 
     // Import the BoM for the Firebase platform
-    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation (platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation ("com.google.firebase:firebase-database:16.0.4")
     implementation ("com.google.firebase:firebase-storage:16.0.4")
+    implementation ("com.google.firebase:firebase-analytics")
 
 
 
