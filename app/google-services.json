@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "262726575289",
+    "project_id": "socialappmobile-e16f6",
+    "storage_bucket": "socialappmobile-e16f6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262726575289:android:0abcafc0a862813ce1a768",
+        "android_client_info": {
+          "package_name": "com.example.doanmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfryX31nKvlM3YetsMpBuCJ6GYFStP__U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
