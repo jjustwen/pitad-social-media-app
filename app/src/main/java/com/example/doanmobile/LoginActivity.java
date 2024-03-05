@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                 String str_password = password.getText().toString();
 
                 if (TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)){
-                    Toast.makeText(LoginActivity.this, "Không được để trống !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Không được để trống !", Toast.LENGTH_LONG).show();
                 } else {
                     auth.signInWithEmailAndPassword(str_email , str_password).addOnCompleteListener(LoginActivity.this , new OnCompleteListener<AuthResult>() {
                         @Override
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     startActivity(intent);
                                                     finish();
                                                 } else {
-                                                    Toast.makeText(LoginActivity.this, "User data not found", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(LoginActivity.this, "Không tìm thấy tài khoản.", Toast.LENGTH_LONG).show();
                                                 }
                                             }
                                         })
@@ -83,12 +83,12 @@ public class LoginActivity extends AppCompatActivity {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 pd.dismiss();
-                                                Toast.makeText(LoginActivity.this, "Failed to retrieve user data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(LoginActivity.this, "Đã xảy ra lỗi: " + e.getMessage(), Toast.LENGTH_LONG).show();
                                             }
                                         });
                             } else {
                                 pd.dismiss();
-                                Toast.makeText(LoginActivity.this, "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Lỗi xác minh tài khoản.", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
