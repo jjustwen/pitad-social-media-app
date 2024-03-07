@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,6 +41,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
+
 import com.example.doanmobile.R;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -50,13 +52,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
-
-
 public class SearchFragment extends Fragment {
     private RecyclerView recyclerView;
     private UserAdapter userAdapter;
     private List<User> mUsers;
     private EditText search_bar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,13 +70,14 @@ public class SearchFragment extends Fragment {
         search_bar = view.findViewById(R.id.search_bar);
 
         mUsers = new ArrayList<>();
-        userAdapter = new UserAdapter(getContext() , mUsers , true);
+        userAdapter = new UserAdapter(getContext(), mUsers, true);
         recyclerView.setAdapter(userAdapter);
 
 //        readUsers();
         search_bar.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -83,40 +85,41 @@ public class SearchFragment extends Fragment {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         return view;
     }
 
-private void searchUser(String s) {
-    recyclerView.setVisibility(View.VISIBLE);
+    private void searchUser(String s) {
+        recyclerView.setVisibility(View.VISIBLE);
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Query query = db.collection("Users")
-            .orderBy("username")
-            .startAt(s)
-            .endAt(s + "\uf8ff");
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        Query query = db.collection("Users")
+                .orderBy("username")
+                .startAt(s)
+                .endAt(s + "\uf8ff");
 
-    query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-        @Override
-        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-            mUsers.clear();
+        query.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                mUsers.clear();
 
-            for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                User user = doc.toObject(User.class);
-                mUsers.add(user);
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
+                    User user = doc.toObject(User.class);
+                    mUsers.add(user);
+                }
+
+                userAdapter.notifyDataSetChanged();
             }
-
-            userAdapter.notifyDataSetChanged();
-        }
-    }).addOnFailureListener(new OnFailureListener() {
-        @Override
-        public void onFailure(@NonNull Exception e) {
-            Log.w(TAG, "Error getting documents.", e);
-        }
-    });
-}
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w(TAG, "Lỗi khi đọc dữ liệu", e);
+            }
+        });
+    }
 
 
 //    private void readUsers() {

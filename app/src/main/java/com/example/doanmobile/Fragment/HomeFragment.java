@@ -2,65 +2,127 @@ package com.example.doanmobile.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
+import com.example.doanmobile.Adapter.PostAdapter;
+import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class HomeFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private RecyclerView recyclerView;
+    private PostAdapter postAdapter;
+    private List<Post> postList;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private List<String> followingList;
+
+    private ProgressBar progressBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        postList = new ArrayList<>();
+        postAdapter = new PostAdapter(getContext() , postList);
+        recyclerView.setAdapter(postAdapter);
+
+//        recyclerView_story = view.findViewById(R.id.recycler_view_story);
+//        recyclerView_story.setHasFixedSize(true);
+//        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext() ,
+//                LinearLayoutManager.HORIZONTAL , false);
+//        recyclerView_story.setLayoutManager(linearLayoutManager1);
+
+
+
+        progressBar = view.findViewById(R.id.progress_circular);
+
+        checkFollowing();
+
+        return view;
     }
+
+    private void checkFollowing() {
+        followingList = new ArrayList<>();
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Follow")
+                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .collection("following")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DocumentSnapshot document : task.getResult()) {
+                                followingList.add(document.getId());
+                            }
+                            readPosts();
+                        }
+                    }
+                });
+    }
+
+    private void readPosts () {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Posts")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener(getActivity(), (value, error) -> {
+                    if (error != null) {
+                        return;
+                    }
+                    if (value != null) {
+                        postList.clear();
+                        for (DocumentChange dc : value.getDocumentChanges()) {
+                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                Post post = dc.getDocument().toObject(Post.class);
+                                for (String id : followingList) {
+                                    if (post.getPublisher().equals(id)) {
+                                        postList.add(post);
+                                        postAdapter.notifyDataSetChanged();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    }
+                });
+    }
+
+
 }

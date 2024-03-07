@@ -60,6 +60,9 @@ dependencies {
 
     implementation ("com.google.code.gson:gson:2.8.6")
 
+//    implementation ("com.github.yalantis:ucrop:2.2.6")
+
+//    implementation ("com.theartofdev.edmodo:android-image-cropper:2.8.0")
 
 
 
