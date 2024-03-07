@@ -382,7 +382,7 @@ public class ProfileFragment extends Fragment
                             for (DocumentSnapshot document : task.getResult().getDocuments())
                             {
                                 Post post = document.toObject(Post.class);
-                                postList.add(post);
+                                postList.add(0, post);
                             }
                             myFotoAdapter.notifyDataSetChanged();
                         }
