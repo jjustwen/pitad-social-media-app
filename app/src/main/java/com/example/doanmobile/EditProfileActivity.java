@@ -70,10 +70,10 @@ public class EditProfileActivity extends AppCompatActivity {
         tv_change = findViewById(R.id.tv_change);
         fullname = findViewById(R.id.fullname);
         username = findViewById(R.id.username);
-        username.setEnabled(false);
+//        username.setEnabled(false);
         bio = findViewById(R.id.bio);
 
-        Toast.makeText(EditProfileActivity.this, "You can't change your username! Contact admin.", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(EditProfileActivity.this, "Bạn không thể thay đổi username.", Toast.LENGTH_SHORT).show();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
@@ -136,7 +136,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void updateProfile(String fullname, String username, String bio) {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
+        DocumentReference userRef = db.collection("Users").document(firebaseUser.getUid());
 
         Map<String, Object> data = new HashMap<>();
         data.put("fullname", fullname);

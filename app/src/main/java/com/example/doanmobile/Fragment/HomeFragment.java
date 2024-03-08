@@ -40,8 +40,6 @@ public class HomeFragment extends Fragment {
     private List<Post> postList;
 
 
-
-
     private List<String> followingList;
 
     private ProgressBar progressBar;
@@ -58,7 +56,7 @@ public class HomeFragment extends Fragment {
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         postList = new ArrayList<>();
-        postAdapter = new PostAdapter(getContext() , postList);
+        postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
 
 //        recyclerView_story = view.findViewById(R.id.recycler_view_story);
@@ -68,9 +66,8 @@ public class HomeFragment extends Fragment {
 //        recyclerView_story.setLayoutManager(linearLayoutManager1);
 
 
-
         progressBar = view.findViewById(R.id.progress_circular);
-
+        readPosts();
         checkFollowing();
 
         return view;
@@ -97,10 +94,14 @@ public class HomeFragment extends Fragment {
                 });
     }
 
-    private void readPosts () {
+    private void readPosts() {
+        if (followingList == null) {
+            // Nếu followingList chưa sẵn sàng, không thực hiện gì cả
+            return;
+        }
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Posts")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .addSnapshotListener(getActivity(), (value, error) -> {
                     if (error != null) {
                         return;

@@ -1,8 +1,11 @@
 package com.example.doanmobile.Adapter;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +21,8 @@ import com.example.doanmobile.Fragment.ProfileFragment;
 import com.example.doanmobile.MainActivity;
 import com.example.doanmobile.Model.User;
 import com.example.doanmobile.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,7 +30,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 import java.util.HashMap;
@@ -143,22 +150,43 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         }
     }
 
-    private void isFollowed (final String userid , final Button button) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("following");
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(userid).exists()){
-                    button.setText("following");
-                } else {
-                    button.setText("follow");
-                }
-            }
+//    private void isFollowed (final String userid , final Button button) {
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid()).child("following");
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.child(userid).exists()){
+//                    button.setText("following");
+//                } else {
+//                    button.setText("follow");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
+private void isFollowed(final String userid, final Button button) {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference followingRef = db.collection("Follow").document(firebaseUser.getUid()).collection("following").document(userid);
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+    followingRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        @Override
+        public void onSuccess(DocumentSnapshot documentSnapshot) {
+            if (documentSnapshot.exists()) {
+                button.setText("following");
+            } else {
+                button.setText("follow");
             }
-        });
-    }
+        }
+    }).addOnFailureListener(new OnFailureListener() {
+        @Override
+        public void onFailure(@NonNull Exception e) {
+            // Handle failure
+            Log.e(TAG, "Error checking following status: ", e);
+        }
+    });
+}
 }

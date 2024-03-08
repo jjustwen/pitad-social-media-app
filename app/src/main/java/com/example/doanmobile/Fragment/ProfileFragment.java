@@ -208,6 +208,7 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 });
+
     }
 
     private void addNotifications() {
@@ -285,17 +286,17 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-        db.collection("Follow").document(profileid)
-                .collection("Following")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful() && task.getResult() != null) {
-                            following.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
+//        db.collection("Follow").document(profileid)
+//                .collection("Following")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful() && task.getResult() != null) {
+//                            following.setText(String.valueOf(task.getResult().size()));
+//                        }
+//                    }
+//                });
     }
 
     private void getNrPosts() {
@@ -311,11 +312,10 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
-
     private void myFotos() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Posts")
                 .whereEqualTo("publisher", profileid)
-                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -326,11 +326,33 @@ public class ProfileFragment extends Fragment {
                                 Post post = document.toObject(Post.class);
                                 postList.add(post);
                             }
+                            Collections.reverse(postList);
                             myFotoAdapter.notifyDataSetChanged();
+
                         }
                     }
                 });
     }
+
+//    private void myFotos() {
+//        db.collection("Posts")
+//                .whereEqualTo("publisher", profileid)
+//                .orderBy("timestamp", Query.Direction.DESCENDING)
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful() && task.getResult() != null) {
+//                            postList.clear();
+//                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+//                                Post post = document.toObject(Post.class);
+//                                postList.add(post);
+//                            }
+//                            myFotoAdapter.notifyDataSetChanged();
+//                        }
+//                    }
+//                });
+//    }
 
 //    private void mysaves() {
 //        mySaves = new ArrayList<>();

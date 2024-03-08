@@ -1,10 +1,13 @@
 package com.example.doanmobile.Model;
 
+import java.util.Date;
+
 public class Post {
     private String postid;
     private String postimage;
     private String description;
     private String publisher;
+
 
     public Post() {
     }
@@ -14,6 +17,7 @@ public class Post {
         this.postimage = postimage;
         this.description = description;
         this.publisher = publisher;
+
     }
 
     public String getPostid() {
