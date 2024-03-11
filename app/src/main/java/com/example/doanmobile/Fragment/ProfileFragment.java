@@ -27,6 +27,7 @@ import com.example.doanmobile.EditProfileActivity;
 import com.example.doanmobile.FollowersActivity;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
+import com.example.doanmobile.OptionsActivity;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -118,6 +119,14 @@ public class ProfileFragment extends Fragment {
         getNrPosts();
         myFotos();
 //        mysaves();
+
+        options.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext() , OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         if (profileid.equals(firebaseUser.getUid())){
             editprofile.setText("Edit Profile");
@@ -214,7 +223,7 @@ public class ProfileFragment extends Fragment {
     private void addNotifications() {
         HashMap<String , Object> hashMap = new HashMap<>();
         hashMap.put("userid" , firebaseUser.getUid());
-        hashMap.put("text" , "started following you");
+        hashMap.put("text" , "Đã bắt đầu theo dõi bạn.");
         hashMap.put("postid" , "");
         hashMap.put("ispost" , false);
 
@@ -326,7 +335,7 @@ public class ProfileFragment extends Fragment {
                                 Post post = document.toObject(Post.class);
                                 postList.add(post);
                             }
-                            Collections.reverse(postList);
+//                            Collections.reverse(postList);
                             myFotoAdapter.notifyDataSetChanged();
 
                         }

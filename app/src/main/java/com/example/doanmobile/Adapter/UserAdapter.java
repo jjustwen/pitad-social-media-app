@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -117,15 +118,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
     }
 
     private void addNotifications(String userid) {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Notifications").child(userid);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference notificationsRef = db.collection("Notifications").document(userid)
+                .collection("Notifications");
 
         HashMap<String , Object> hashMap = new HashMap<>();
         hashMap.put("userid" , firebaseUser.getUid());
-        hashMap.put("text" , "started following you");
+        hashMap.put("text" , "Đã bắt đầu theo dõi bạn.");
         hashMap.put("postid" , "");
         hashMap.put("ispost" , false);
-
-        reference.push().setValue(hashMap);
+        notificationsRef.add(hashMap);
     }
 
     @Override
