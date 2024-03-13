@@ -89,7 +89,7 @@ public class PostActivity extends AppCompatActivity {
 
     private void uploadImage() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Posting");
+        progressDialog.setMessage("Posting...");
         progressDialog.show();
 
         if (imageUri != null) {
@@ -164,7 +164,7 @@ public class PostActivity extends AppCompatActivity {
             imageUri = data.getData();
             image_added.setImageURI(imageUri);
         } else {
-            Toast.makeText(this, "Something went wrong , try again!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Đã xảy ra lỗi, vui lòng thử lại !", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(PostActivity.this, MainActivity.class));
             finish();
         }
