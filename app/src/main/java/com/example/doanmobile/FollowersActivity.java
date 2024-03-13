@@ -134,7 +134,7 @@ public class FollowersActivity extends AppCompatActivity {
     private void getFollowing() {
         db.collection("Follow")
                 .document(id)
-                .collection("following")
+                .collection("Following")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

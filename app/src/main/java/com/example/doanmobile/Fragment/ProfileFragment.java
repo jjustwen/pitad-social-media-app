@@ -253,6 +253,7 @@ public class ProfileFragment extends Fragment {
                                         .load(user.getImageurl())
                                         .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
                                         .into(image_profile);
+
                                 username.setText(user.getUsername());
                                 fullname.setText(user.getFullname());
                                 bio.setText(user.getBio());
@@ -295,17 +296,17 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-//        db.collection("Follow").document(profileid)
-//                .collection("Following")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful() && task.getResult() != null) {
-//                            following.setText(String.valueOf(task.getResult().size()));
-//                        }
-//                    }
-//                });
+        db.collection("Follow").document(profileid)
+                .collection("Following")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            following.setText(String.valueOf(task.getResult().size()));
+                        }
+                    }
+                });
     }
 
     private void getNrPosts() {

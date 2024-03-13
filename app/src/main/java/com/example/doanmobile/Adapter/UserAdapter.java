@@ -21,8 +21,10 @@ import com.example.doanmobile.Fragment.ProfileFragment;
 import com.example.doanmobile.MainActivity;
 import com.example.doanmobile.Model.User;
 import com.example.doanmobile.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -97,6 +99,27 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>{
         holder.btn_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference followingRef = db.collection("Follow").document(firebaseUser.getUid())
+                        .collection("following").document(user.getId());
+                DocumentReference followersRef = db.collection("Follow").document(user.getId())
+                        .collection("followers").document(firebaseUser.getUid());
+
+                followingRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if(documentSnapshot.exists()){
+
+                            }
+                        }
+
+                    }
+                });
+
+
+
                 if (holder.btn_follow.getText().toString().equals("follow")){
                     FirebaseDatabase.getInstance().getReference().child("Follow").child(firebaseUser.getUid())
                             .child("following").child(user.getId()).setValue(true);
