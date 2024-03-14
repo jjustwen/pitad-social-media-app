@@ -62,12 +62,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         DocumentReference docRef = db.collection("Users").document(post.getPublisher());
         if (post.getLike().contains(curUserID))
         {
-            post.getLike().remove(curUserID);
             holder.heart.setImageResource(R.drawable.ic_heart_after);
         }
         else
         {
-            post.getLike().add(curUserID);
             holder.heart.setImageResource(R.drawable.ic_heart);
         }
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()

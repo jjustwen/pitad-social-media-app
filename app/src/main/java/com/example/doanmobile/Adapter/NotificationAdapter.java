@@ -24,54 +24,66 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>{
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>
+{
 
     private Context mContext;
     private List<Notification> mNotifications;
 
-    public NotificationAdapter(Context mContext, List<Notification> mNotifications) {
+    public NotificationAdapter(Context mContext, List<Notification> mNotifications)
+    {
         this.mContext = mContext;
         this.mNotifications = mNotifications;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.notification_item , parent , false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    {
+        View view = LayoutInflater.from(mContext).inflate(R.layout.notification_item, parent, false);
         return new NotificationAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position)
+    {
 
         final Notification notification = mNotifications.get(position);
         holder.text.setText(notification.getText());
 
-        getUserInfo(holder.image_profile , holder.username , notification.getUserid());
+        getUserInfo(holder.image_profile, holder.username, notification.getUserid());
 
-        if (notification.isIspost()){
+        if (notification.isIspost())
+        {
             holder.post_image.setVisibility(View.VISIBLE);
-            getPostImage(holder.post_image , notification.getPostid());
-        } else {
+            getPostImage(holder.post_image, notification.getPostid());
+        }
+        else
+        {
             holder.post_image.setVisibility(View.GONE);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                if (notification.isIspost()){
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS" , Context.MODE_PRIVATE).edit();
-                    editor.putString("postid" , notification.getPostid());
+            public void onClick(View v)
+            {
+                if (notification.isIspost())
+                {
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                    editor.putString("postid", notification.getPostid());
                     editor.apply();
 
-                    ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container ,
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new PostDetailFragment()).commit();
-                } else {
-                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS" , Context.MODE_PRIVATE).edit();
-                    editor.putString("profileid" , notification.getUserid());
+                }
+                else
+                {
+                    SharedPreferences.Editor editor = mContext.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                    editor.putString("profileid", notification.getUserid());
                     editor.apply();
 
-                    ((FragmentActivity)mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container ,
+                    ((FragmentActivity) mContext).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             new ProfileFragment()).commit();
                 }
             }
@@ -80,11 +92,13 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public int getItemCount() {
+    public int getItemCount()
+    {
         return mNotifications.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
 
         public ImageView image_profile;
         public ImageView post_image;
@@ -92,7 +106,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         public TextView text;
 
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView)
+        {
             super(itemView);
 
             image_profile = itemView.findViewById(R.id.image_profile);
@@ -102,34 +117,44 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         }
     }
 
-    private void getUserInfo(final ImageView imageView , final TextView username , String publisherid) {
+    private void getUserInfo(final ImageView imageView, final TextView username, String publisherid)
+    {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Users").document(publisherid).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
+        db.collection("Users").document(publisherid).get().addOnCompleteListener(task ->
+            {
+            if (task.isSuccessful())
+            {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (document.exists())
+                {
                     User user = document.toObject(User.class);
-                    if (user != null) {
+                    if (user != null)
+                    {
                         Glide.with(mContext).load(user.getImageurl()).placeholder(R.drawable.default_avatar).into(imageView);
                         username.setText(user.getUsername());
                     }
                 }
             }
-        });
+            });
     }
 
-    private void getPostImage (final ImageView imageView , String postid) {
+    private void getPostImage(final ImageView imageView, String postid)
+    {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Posts").document(postid).get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
+        db.collection("Posts").document(postid).get().addOnCompleteListener(task ->
+            {
+            if (task.isSuccessful())
+            {
                 DocumentSnapshot document = task.getResult();
-                if (document.exists()) {
+                if (document.exists())
+                {
                     Post post = document.toObject(Post.class);
-                    if (post != null) {
+                    if (post != null)
+                    {
                         Glide.with(mContext).load(post.getPostimage()).into(imageView);
                     }
                 }
             }
-        });
+            });
     }
 }
