@@ -98,7 +98,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             image_profile = itemView.findViewById(R.id.image_profile);
             post_image = itemView.findViewById(R.id.post_image);
             username = itemView.findViewById(R.id.username);
-            text = itemView.findViewById(R.id.comment);
+//            text = itemView.findViewById(R.id.comment);
         }
     }
 
