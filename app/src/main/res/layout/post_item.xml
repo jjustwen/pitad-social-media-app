@@ -67,10 +67,11 @@
             android:paddingTop="7dp"
             android:paddingEnd="10dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/like"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:background="@color/white"
                 android:src="@drawable/ic_heart" />
 
             <TextView
@@ -102,16 +103,18 @@
             android:text="caption here"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
+
         <TextView
             android:id="@+id/publish_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
             android:text="06-03-2024"
-
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
             android:textStyle="bold" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"

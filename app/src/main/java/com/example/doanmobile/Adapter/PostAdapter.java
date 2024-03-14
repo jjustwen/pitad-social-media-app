@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     FirebaseUser curUser = auth.getCurrentUser();
     String curUserID = curUser.getUid();
 
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
@@ -58,7 +60,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(post.getPublisher());
-
+        if (post.getLike().contains(curUserID))
+        {
+            post.getLike().remove(curUserID);
+            holder.heart.setImageResource(R.drawable.ic_heart_after);
+        }
+        else
+        {
+            post.getLike().add(curUserID);
+            holder.heart.setImageResource(R.drawable.ic_heart);
+        }
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
             @Override
@@ -73,12 +84,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
             }
         });
 
-        holder.like.setOnClickListener(new View.OnClickListener()
+        holder.heart.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                post.getLike().add(curUserID);
+                if (post.getLike().contains(curUserID))
+                {
+                    post.getLike().remove(curUserID);
+                    holder.heart.setImageResource(R.drawable.ic_heart_after);
+                }
+                else
+                {
+                    post.getLike().add(curUserID);
+                    holder.heart.setImageResource(R.drawable.ic_heart);
+                }
                 notifyItemChanged(position);
                 db.collection("Posts").document(post.getPostid()).set(post);
             }
@@ -134,7 +154,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
         public TextView username;
         public TextView likes;
-        public ImageView like;
+        public ImageButton heart;
         public TextView publish_date;
         public TextView description;
 
@@ -148,7 +168,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 //            save = itemView.findViewById(R.id.save);
 //            more = itemView.findViewById(R.id.more);
             username = itemView.findViewById(R.id.username);
-            like = itemView.findViewById(R.id.like);
+            heart = itemView.findViewById(R.id.like);
             publish_date = itemView.findViewById(R.id.publish_date);
             description = itemView.findViewById(R.id.description);
 
