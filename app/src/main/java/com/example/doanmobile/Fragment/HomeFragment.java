@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
@@ -12,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.doanmobile.Adapter.MyFotoAdapter;
 import com.example.doanmobile.Adapter.PostAdapter;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.R;
@@ -53,6 +53,7 @@ public class HomeFragment extends Fragment
         postList = new ArrayList<>();
         postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
+
         db = FirebaseFirestore.getInstance();
 //        recyclerView_story = view.findViewById(R.id.recycler_view_story);
 //        recyclerView_story.setHasFixedSize(true);
@@ -84,7 +85,7 @@ public class HomeFragment extends Fragment
                             for (DocumentSnapshot document : task.getResult().getDocuments())
                             {
                                 Post post = document.toObject(Post.class);
-                                postList.add(post);
+                                postList.add(0, post);
                             }
                             postAdapter.notifyDataSetChanged();
                         }

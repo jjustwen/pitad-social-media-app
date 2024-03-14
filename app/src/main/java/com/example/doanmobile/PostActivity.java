@@ -22,11 +22,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 public class PostActivity extends AppCompatActivity
@@ -130,11 +132,6 @@ public class PostActivity extends AppCompatActivity
 
                         String postID = UUID.randomUUID().toString();
                         Post post = new Post(postID, myUrl, description.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
-
-//                        HashMap<String, Object> postMap = new HashMap<>();
-//                        postMap.put("postimage", myUrl);
-//                        postMap.put("description", description.getText().toString());
-//                        postMap.put("publisher", FirebaseAuth.getInstance().getCurrentUser().getUid());
                         db.collection("Posts").document(postID).set(post)
                                 .addOnCompleteListener(new OnCompleteListener<Void>()
                                 {

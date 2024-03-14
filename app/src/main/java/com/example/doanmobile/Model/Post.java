@@ -1,6 +1,6 @@
 package com.example.doanmobile.Model;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 
@@ -15,24 +15,37 @@ public class Post
         return publish_date;
     }
 
-    public String getUserimage()
-    {
-        return userimage;
-    }
-
-    public void setUserimage(String userimage)
-    {
-        this.userimage = userimage;
-    }
-
-    private String userimage;
     private String description;
     private String publisher;
 
-    public int getLike()
+    public void setPublish_date(String publish_date)
     {
+        this.publish_date = publish_date;
+    }
 
-        return like.size();
+    public ArrayList<String> getLike()
+    {
+        if (like != null)
+            return like;
+        return new ArrayList<String>();
+
+    }
+
+    public void setLike(ArrayList<String> like)
+    {
+        this.like = like;
+    }
+
+    public ArrayList<String> getSave()
+    {
+        if (save != null)
+            return save;
+        return new ArrayList<String>();
+    }
+
+    public void setSave(ArrayList<String> save)
+    {
+        this.save = save;
     }
 
     private ArrayList<String> like;
@@ -51,7 +64,8 @@ public class Post
         this.publisher = publisher;
         like = new ArrayList<String>();
         save = new ArrayList<String>();
-        publish_date = java.time.LocalTime.now().toString();
+
+        publish_date = LocalDate.now().toString();
     }
 
     public String getPostid()
