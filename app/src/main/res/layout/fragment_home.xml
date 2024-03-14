@@ -49,20 +49,14 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:id="@+id/recycler_view_story"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/recycler_view"/>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress_circular"
-        android:layout_centerInParent="true"/>
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_circular"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerInParent="true" />-->
 
 </RelativeLayout>

@@ -134,7 +134,7 @@ public class FollowersActivity extends AppCompatActivity {
     private void getFollowing() {
         db.collection("Follow")
                 .document(id)
-                .collection("following")
+                .collection("Following")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -157,7 +157,7 @@ public class FollowersActivity extends AppCompatActivity {
     private void getFollowers() {
         db.collection("Follow")
                 .document(id)
-                .collection("followers")
+                .collection("Followers")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -172,7 +172,7 @@ public class FollowersActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle error
+
                     }
                 });
     }
@@ -196,7 +196,7 @@ public class FollowersActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle error
+
                     }
                 });
     }

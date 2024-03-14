@@ -1,8 +1,5 @@
 package com.example.doanmobile;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,26 +10,24 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.doanmobile.Model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
-
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity
+{
     private EditText username;
     private EditText fullname;
+    private EditText repasswd;
     private EditText email;
     private EditText password;
     private Button register;
@@ -47,7 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
@@ -59,66 +55,83 @@ public class RegisterActivity extends AppCompatActivity {
         register = findViewById(R.id.register);
         txt_login = findViewById(R.id.txt_login);
         usernameStatus = findViewById(R.id.availability_username);
-        usernameCheck = findViewById(R.id.check_username);
-        txt_login.setOnClickListener(new View.OnClickListener() {
+        repasswd = findViewById(R.id.repassword);
+//        usernameCheck = findViewById(R.id.check_username);
+        txt_login.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(RegisterActivity.this , LoginActivity.class));
+            public void onClick(View v)
+            {
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
-        usernameCheck.setOnClickListener(new View.OnClickListener() {
+//        usernameCheck.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                checkUsernameAvailability();
+//            }
+//        });
+        register.setOnClickListener(new View.OnClickListener()
+        {
             @Override
-            public void onClick(View v) {
-                checkUsernameAvailability();
-            }
-        });
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(View v)
+            {
 
                 String str_username = username.getText().toString();
                 String str_fullname = fullname.getText().toString();
                 String str_email = email.getText().toString();
                 String str_password = password.getText().toString();
+                String str_repasswd = repasswd.getText().toString();
 
                 if (TextUtils.isEmpty(str_username) || TextUtils.isEmpty(str_fullname) ||
-                        TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password)) {
+                        TextUtils.isEmpty(str_email) || TextUtils.isEmpty(str_password) || TextUtils.isEmpty(str_repasswd))
+                {
                     Toast.makeText(RegisterActivity.this, "Không được để trống !", Toast.LENGTH_SHORT).show();
-                } else if (str_password.length() < 6) {
+                }
+                else if (str_password.length() < 6)
+                {
                     Toast.makeText(RegisterActivity.this, "Mật khẩu phải nhiều hơn 6 ký tự.", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                else if (str_repasswd.compareTo(str_password) != 0)
+                {
+                    Toast.makeText(RegisterActivity.this, "Mật khẩu không khớp.", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
                     RegisterUser(str_username, str_fullname, str_email, str_password);
                 }
             }
         });
     }
-    private void RegisterUser(final String username, final String fullname, String email, String password) {
+
+    private void RegisterUser(final String username, final String fullname, String email, String password)
+    {
+        checkUsernameAvailability();
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>()
+        {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
+            public void onComplete(@NonNull Task<AuthResult> task)
+            {
+                if (task.isSuccessful())
+                {
 
                     FirebaseUser firebaseUser = auth.getCurrentUser();
                     String userid = firebaseUser.getUid();
-
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("id", userid);
-                    hashMap.put("username", username);
-                    hashMap.put("fullname", fullname);
-                    hashMap.put("password",password);
-                    hashMap.put("email",email);
-                    hashMap.put("bio", "");
-                    hashMap.put("imageurl", "default");
-
+                    User new_user = new User(userid, username, fullname, "default", "", password);
                     db.collection("Users").document(userid)
-                            .set(hashMap)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            .set(new_user)
+                            .addOnCompleteListener(new OnCompleteListener<Void>()
+                            {
                                 @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
+                                public void onComplete(@NonNull Task<Void> task)
+                                {
+                                    if (task.isSuccessful())
+                                    {
                                         Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
@@ -127,13 +140,17 @@ public class RegisterActivity extends AppCompatActivity {
                             });
 
                     Toast.makeText(RegisterActivity.this, "Đăng ký thành công", Toast.LENGTH_LONG).show();
-                } else {
+                }
+                else
+                {
                     Toast.makeText(RegisterActivity.this, "Đăng ký không thành công", Toast.LENGTH_LONG).show();
                 }
             }
         });
     }
-    private void checkUsernameAvailability() {
+
+    private void checkUsernameAvailability()
+    {
 
         final String txt_username = username.getText().toString();
 
@@ -142,20 +159,30 @@ public class RegisterActivity extends AppCompatActivity {
         db.collection("Users")
                 .whereEqualTo("username", txt_username)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            if (!task.getResult().isEmpty()) {
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            if (!task.getResult().isEmpty())
+                            {
                                 usernameFlag = 1;
                                 usernameStatus.setText("Không thể sử dụng");
                                 Toast.makeText(RegisterActivity.this, "Tên đã tồn tại, hãy thử tên khác!", Toast.LENGTH_LONG).show();
-                            } else {
+                                finish();
+                            }
+                            else
+                            {
                                 usernameStatus.setText("Có thể sử dụng");
                                 usernameFlag = 0;
                             }
-                        } else {
+                        }
+                        else
+                        {
                             Toast.makeText(RegisterActivity.this, "Đã xảy ra lỗi khi kiểm tra tên nguười dùng: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            finish();
                         }
                     }
                 });

@@ -1,5 +1,7 @@
 package com.example.doanmobile;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +11,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.doanmobile.Fragment.ProfileFragment;
 import com.example.doanmobile.Model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +36,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -78,23 +86,50 @@ public class EditProfileActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
 
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                fullname.setText(user.getFullname());
-                username.setText(user.getUsername());
-                bio.setText(user.getBio());
-                Glide.with(EditProfileActivity.this)
-                        .load(user.getImageurl())
-                        .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
-                        .into(image_profile);
-            }
+//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                User user = dataSnapshot.getValue(User.class);
+//                fullname.setText(user.getFullname());
+//                username.setText(user.getUsername());
+//                bio.setText(user.getBio());
+//                Glide.with(EditProfileActivity.this)
+//                        .load(user.getImageurl())
+//                        .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
+//                        .into(image_profile);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference userRef = db.collection("Users").document(firebaseUser.getUid());
 
+        userRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
 
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    User user = documentSnapshot.toObject(User.class);
+                    if (user != null) {
+                        fullname.setText(user.getFullname());
+                        username.setText(user.getUsername());
+                        bio.setText(user.getBio());
+                        Glide.with(EditProfileActivity.this)
+                                .load(user.getImageurl())
+                                .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
+                                .into(image_profile);
+                    }
+                } else {
+                    Log.d(TAG, "No such document");
+                }
             }
         });
 
@@ -129,12 +164,16 @@ public class EditProfileActivity extends AppCompatActivity {
                 updateProfile(fullname.getText().toString() ,
                         username.getText().toString() ,
                         bio.getText().toString());
+                startActivity(new Intent(EditProfileActivity.this, ProfileFragment.class));
             }
         });
     }
 
     private void updateProfile(String fullname, String username, String bio) {
 
+        if(fullname.isEmpty() || username.isEmpty()){
+            Toast.makeText(this, "Không được để trống thông tin! ", Toast.LENGTH_SHORT).show();
+        }
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("users").document(firebaseUser.getUid());
 
@@ -168,7 +207,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void uploadImage(){
         final ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Uploading");
+        pd.setMessage("Đang tải lên...");
         pd.show();
 
         if (mImageUri != null){
@@ -181,7 +220,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (!task.isSuccessful()){
                         throw task.getException();
                     }
-
                     return filereference.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
@@ -191,15 +229,30 @@ public class EditProfileActivity extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         String myUrl = downloadUri.toString();
 
-                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        DocumentReference userRef = db.collection("Users").document(firebaseUser.getUid());
 
-                        HashMap<String , Object> hashMap = new HashMap<>();
-                        hashMap.put("imageurl" , "" + myUrl);
+                        HashMap<String, Object> hashMap = new HashMap<>();
+                        hashMap.put("imageurl", myUrl);
 
-                        reference.updateChildren(hashMap);
-                        pd.dismiss();
+                        userRef.set(hashMap, SetOptions.merge())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Toast.makeText(EditProfileActivity.this, "Tải ảnh thành công", Toast.LENGTH_SHORT).show();
+                                        pd.dismiss();
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(EditProfileActivity.this, "Tải ảnh thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        pd.dismiss();
+                                    }
+                                });
                     } else {
-                        Toast.makeText(EditProfileActivity.this, "Failed!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(EditProfileActivity.this, "Lỗi!", Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
                     }
                 }
             }).addOnFailureListener(new OnFailureListener() {
@@ -209,7 +262,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             });
         } else {
-            Toast.makeText(EditProfileActivity.this, "No image selected", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditProfileActivity.this, "Chưa chọn hình ảnh", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -232,9 +285,9 @@ protected void onActivityResult(int requestCode, int resultCode, @Nullable Inten
 
     if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
         mImageUri = data.getData();
-        uploadImage();
+        image_profile.setImageURI(mImageUri);
     } else {
-        Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Đã xảy ra lỗi! ", Toast.LENGTH_SHORT).show();
     }
 }
 
