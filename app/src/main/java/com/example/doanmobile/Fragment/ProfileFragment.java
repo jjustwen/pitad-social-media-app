@@ -390,41 +390,4 @@ public class ProfileFragment extends Fragment
                 });
     }
 
-//    private void mysaves() {
-//        mySaves = new ArrayList<>();
-//
-//        db.collection("Saves").document(firebaseUser.getUid())
-//                .collection("Saved")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful() && task.getResult() != null) {
-//                            for (DocumentSnapshot snapshot : task.getResult().getDocuments()) {
-//                                mySaves.add(snapshot.getId());
-//                            }
-//                            readSaves();
-//                        }
-//                    }
-//                });
-//    }
-//
-//    private void readSaves() {
-//        db.collection("Posts")
-//                .whereIn("postid", mySaves)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                        if (task.isSuccessful() && task.getResult() != null) {
-//                            postList_saves.clear();
-//                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
-//                                Post post = document.toObject(Post.class);
-//                                postList_saves.add(post);
-//                            }
-//                            myFotoAdapter_saves.notifyDataSetChanged();
-//                        }
-//                    }
-//                });
-//    }
 }

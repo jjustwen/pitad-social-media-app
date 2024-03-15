@@ -122,29 +122,5 @@ public class SearchFragment extends Fragment {
     }
 
 
-//    private void readUsers() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        CollectionReference usersRef = db.collection("Users");
-//
-//        usersRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                mUsers.clear();
-//
-//                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-//                    User user = doc.toObject(User.class);
-//                    mUsers.add(user);
-//                }
-//
-//                userAdapter.notifyDataSetChanged();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.e(TAG, "Error getting documents: ", e);
-//            }
-//        });
-//    }
-
 
 }

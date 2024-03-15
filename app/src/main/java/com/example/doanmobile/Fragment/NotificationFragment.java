@@ -57,7 +57,6 @@ public class NotificationFragment extends Fragment
         recyclerView.setAdapter(notificationAdapter);
 
         loadNotification();
-//        readNotification();
 
         return view;
     }
@@ -65,7 +64,7 @@ public class NotificationFragment extends Fragment
 
     private void loadNotification()
     {
-        db.collection("Notifications")
+        db.collection("Notifications").whereEqualTo("userid", currentUserID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
                 {

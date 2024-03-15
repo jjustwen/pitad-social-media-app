@@ -78,9 +78,6 @@ public class FollowersActivity extends AppCompatActivity {
                 getFollowers();
                 break;
 
-//            case "views":
-//                getViews();
-//                break;
         }
 
     }

@@ -86,25 +86,6 @@ public class EditProfileActivity extends AppCompatActivity {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         storageRef = FirebaseStorage.getInstance().getReference("uploads");
 
-//        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser.getUid());
-//        reference.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                User user = dataSnapshot.getValue(User.class);
-//                fullname.setText(user.getFullname());
-//                username.setText(user.getUsername());
-//                bio.setText(user.getBio());
-//                Glide.with(EditProfileActivity.this)
-//                        .load(user.getImageurl())
-//                        .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
-//                        .into(image_profile);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference userRef = db.collection("Users").document(firebaseUser.getUid());
 
@@ -266,19 +247,7 @@ public class EditProfileActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            mImageUri = result.getUri();
-//
-//            uploadImage();
-//        } else {
-//            Toast.makeText(this, "Something gone wrong!", Toast.LENGTH_SHORT).show();
-//        }
-//    }
+
 @Override
 protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);

@@ -132,7 +132,7 @@ public class PostActivity extends AppCompatActivity
                         String postID = UUID.randomUUID().toString();
                         String notifyID = UUID.randomUUID().toString();
                         Post post = new Post(postID, myUrl, description.getText().toString(), currentUserID);
-                        Notification notification = new Notification(notifyID, currentUserID, "", "new posted", postID);
+                        Notification notification = new Notification(notifyID, currentUserID, "", "đã đăng bài viết mới", postID);
                         db.collection("Notifications").document(notifyID).set(notification);
                         db.collection("Posts").document(postID).set(post)
                                 .addOnCompleteListener(new OnCompleteListener<Void>()

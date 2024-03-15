@@ -35,7 +35,7 @@ public class HomeFragment extends Fragment
     private ArrayList<Post> postList;
     FirebaseFirestore db;
 
-//    private List<String> followingList;
+
 
     private ProgressBar progressBar;
 
