@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doanmobile.Fragment.PostDetailFragment;
+import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 {
@@ -46,11 +48,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         return new ViewHolder(view);
     }
 
-    String postID;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser curUser = auth.getCurrentUser();
     String curUserID = curUser.getUid();
-
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
@@ -77,8 +77,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                 DocumentSnapshot document = task.getResult();
                 String username = document.getString("username");
                 String profileImageUrl = document.getString("imageurl");
+
                 holder.username.setText(username);
-                Glide.with(context).load(profileImageUrl).into(holder.image_profile);
+                if (profileImageUrl.equals("default"))
+                {
+                    Glide.with(context).load(R.drawable.default_avatar).into(holder.image_profile);
+                }
+                else
+                {
+                    Glide.with(context).load(profileImageUrl).into(holder.image_profile);
+                }
             }
         });
 
@@ -94,6 +102,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                 }
                 else
                 {
+                    //Nếu tự like thì ko cần thông báo lên
+                    if (post.getPublisher().equals(curUserID))
+                    {
+                        String heart_notify_id = UUID.randomUUID().toString();
+                        Notification heart_notify = new Notification(heart_notify_id, post.getPublisher(), curUserID, "thích bài viết của bạn", post.getPostid());
+                        db.collection("Notifications").document(heart_notify_id).set(heart_notify);
+                    }
+
                     post.getLike().add(curUserID);
                     holder.heart.setImageResource(R.drawable.ic_heart);
                 }
@@ -114,7 +130,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         }
         holder.publish_date.setText(post.getPublish_date());
         holder.description.setText(post.getDescription());
-
 
         holder.post_image.setOnClickListener(new View.OnClickListener()
         {

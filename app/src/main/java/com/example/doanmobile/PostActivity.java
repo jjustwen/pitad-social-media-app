@@ -16,19 +16,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 
-import java.util.HashMap;
 import java.util.UUID;
 
 public class PostActivity extends AppCompatActivity
@@ -129,9 +128,12 @@ public class PostActivity extends AppCompatActivity
                         Uri downloadUri = task.getResult();
                         myUrl = downloadUri.toString();
 
-
+                        String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String postID = UUID.randomUUID().toString();
-                        Post post = new Post(postID, myUrl, description.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        String notifyID = UUID.randomUUID().toString();
+                        Post post = new Post(postID, myUrl, description.getText().toString(), currentUserID);
+                        Notification notification = new Notification(notifyID, currentUserID, "", "new posted", postID);
+                        db.collection("Notifications").document(notifyID).set(notification);
                         db.collection("Posts").document(postID).set(post)
                                 .addOnCompleteListener(new OnCompleteListener<Void>()
                                 {
@@ -203,45 +205,3 @@ public class PostActivity extends AppCompatActivity
     }
 
 }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK){
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            imageUri = result.getUri();
-//
-//            image_added.setImageURI(imageUri);
-//        } else {
-//            Toast.makeText(this, "Something went wrong , try again!", Toast.LENGTH_SHORT).show();
-//            startActivity(new Intent(PostActivity.this , MainActivity.class));
-//            finish();
-//        }
-//
-//    }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        final ArrayAdapter<Hashtag> hashtagAdapter = new HashtagArrayAdapter<>(getApplicationContext());
-//        final DatabaseReference mHashTagRef = FirebaseDatabase.getInstance().getReference().child("HashTags");
-//
-//        mHashTagRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                    hashtagAdapter.add(new Hashtag(snapshot.getKey() , (int)snapshot.getChildrenCount()));
-//                    Log.d("HashTag" , snapshot.getKey());
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//        description.setHashtagAdapter(hashtagAdapter);
-//    }

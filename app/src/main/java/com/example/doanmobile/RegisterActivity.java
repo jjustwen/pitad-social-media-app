@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity
 
                     FirebaseUser firebaseUser = auth.getCurrentUser();
                     String userid = firebaseUser.getUid();
-                    User new_user = new User(userid, username, fullname, "default", "", password);
+                    User new_user = new User(userid, username, fullname, "default", "", password, email);
                     db.collection("Users").document(userid)
                             .set(new_user)
                             .addOnCompleteListener(new OnCompleteListener<Void>()

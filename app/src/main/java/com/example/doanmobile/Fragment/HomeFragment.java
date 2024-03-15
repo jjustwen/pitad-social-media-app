@@ -18,6 +18,7 @@ import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -55,16 +56,6 @@ public class HomeFragment extends Fragment
         recyclerView.setAdapter(postAdapter);
 
         db = FirebaseFirestore.getInstance();
-//        recyclerView_story = view.findViewById(R.id.recycler_view_story);
-//        recyclerView_story.setHasFixedSize(true);
-//        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getContext() ,
-//                LinearLayoutManager.HORIZONTAL , false);
-//        recyclerView_story.setLayoutManager(linearLayoutManager1);
-
-
-//        progressBar = view.findViewById(R.id.progress_circular);
-
-//        checkFollowing();
         loadPosts();
         return view;
     }
@@ -92,66 +83,5 @@ public class HomeFragment extends Fragment
                     }
                 });
     }
-//    private void checkFollowing()
-//    {
-//        followingList = new ArrayList<>();
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("Follow")
-//                .document(FirebaseAuth.getInstance().getCurrentUser().getUid())
-//                .collection("following")
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-//                {
-//                    @Override
-//                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-//                    {
-//                        if (task.isSuccessful())
-//                        {
-//                            for (DocumentSnapshot document : task.getResult())
-//                            {
-//                                followingList.add(document.getId());
-//                            }
-//                            readPosts();
-//                        }
-//                    }
-//                });
-//    }
-
-//    private void readPosts()
-//    {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("Posts")
-//                .orderBy("timestamp", Query.Direction.DESCENDING)
-//                .addSnapshotListener(getActivity(), (value, error) ->
-//                    {
-//                    if (error != null)
-//                    {
-//                        return;
-//                    }
-//                    if (value != null)
-//                    {
-//                        postList.clear();
-//                        for (DocumentChange dc : value.getDocumentChanges())
-//                        {
-//                            if (dc.getType() == DocumentChange.Type.ADDED)
-//                            {
-//                                Post post = dc.getDocument().toObject(Post.class);
-//                                for (String id : followingList)
-//                                {
-//                                    if (post.getPublisher().equals(id))
-//                                    {
-//                                        postList.add(post);
-//                                        postAdapter.notifyDataSetChanged();
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                        progressBar.setVisibility(View.GONE);
-//                    }
-//                    });
-//    }
-
 
 }

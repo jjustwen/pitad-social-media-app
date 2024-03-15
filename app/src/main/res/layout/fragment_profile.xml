@@ -64,6 +64,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image_profile"
                     android:layout_width="80dp"
+                    android:src="@drawable/default_avatar"
                     android:layout_height="80dp" />
 
                 <LinearLayout
@@ -168,12 +169,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:text="full name"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/bio"
+                    android:text="bio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
