@@ -1,7 +1,6 @@
 package com.example.doanmobile.Fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,19 +10,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.doanmobile.Adapter.MyFotoAdapter;
-import com.example.doanmobile.EditProfileActivity;
-import com.example.doanmobile.FollowersActivity;
+import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
 import com.example.doanmobile.R;
@@ -31,56 +27,41 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.UUID;
 
 public class ProfileFragment extends Fragment
 {
 
-    private ImageView image_profile;
-    private ImageView options;
-    private TextView posts;
-    private TextView followers;
-    private TextView following;
-    private TextView fullname;
-    private TextView bio;
-    private TextView username;
-    private ImageButton my_fotos;
-    private ImageButton saved_fotos;
-    private Button editprofile;
-
-    private RecyclerView recyclerView;
+    private ImageView image_profile, options;
+    private TextView posts, followers, following, fullname, bio, username;
+    private ImageButton my_fotos, saved_fotos;
     private MyFotoAdapter myFotoAdapter;
-    private List<Post> postList;
-
-    private List<String> mySaves;
-    private RecyclerView recyclerView_saves;
-    private MyFotoAdapter myFotoAdapter_saves;
-    private List<Post> postList_saves;
-
-    private FirebaseUser firebaseUser;
+    private ArrayList<Post> postList;
     private String profileid;
+    private Button btn_follow;
 
+    private RecyclerView recyclerView, recyclerView_saves;
+    private FirebaseUser firebaseUser;
+    FirebaseAuth firebaseAuth;
     private FirebaseFirestore db;
+    private String curUserID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        SharedPreferences prefs = getActivity().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
+        profileid = prefs.getString("profileid", "");
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
+        curUserID = firebaseUser.getUid().toString();
         db = FirebaseFirestore.getInstance();
-
-        SharedPreferences prefs = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
-        profileid = prefs.getString("profileid", "none");
-
         image_profile = view.findViewById(R.id.image_profile);
         options = view.findViewById(R.id.options);
         posts = view.findViewById(R.id.posts);
@@ -90,179 +71,127 @@ public class ProfileFragment extends Fragment
         bio = view.findViewById(R.id.bio);
         my_fotos = view.findViewById(R.id.my_fotos);
         username = view.findViewById(R.id.username);
-        saved_fotos = view.findViewById(R.id.saved_fotos);
-        editprofile = view.findViewById(R.id.edit_profile);
+//        saved_fotos = view.findViewById(R.id.saved_fotos);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
+        btn_follow = view.findViewById(R.id.btn_follow);
+
+        recyclerView = view.findViewById(R.id.recycler_view_my_post);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new GridLayoutManager(getContext(), 3);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(gridLayoutManager);
         postList = new ArrayList<>();
         myFotoAdapter = new MyFotoAdapter(getContext(), postList);
         recyclerView.setAdapter(myFotoAdapter);
 
-        recyclerView_saves = view.findViewById(R.id.recycler_view_save);
-        recyclerView_saves.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager1 = new GridLayoutManager(getContext(), 3);
-        recyclerView_saves.setLayoutManager(linearLayoutManager1);
-        postList_saves = new ArrayList<>();
-        myFotoAdapter_saves = new MyFotoAdapter(getContext(), postList_saves);
-        recyclerView_saves.setAdapter(myFotoAdapter_saves);
+//        recyclerView_saves = view.findViewById(R.id.recycler_view_save);
+//        recyclerView_saves.setHasFixedSize(true);
+//        LinearLayoutManager linearLayoutManager1 = new GridLayoutManager(getContext(), 3);
+//        recyclerView_saves.setLayoutManager(linearLayoutManager1);
+//        postList_saves = new ArrayList<>();
+//        myFotoAdapter_saves = new MyFotoAdapter(getContext(), postList_saves);
+//        recyclerView_saves.setAdapter(myFotoAdapter_saves);
 
-        recyclerView.setVisibility(View.VISIBLE);
-        recyclerView_saves.setVisibility(View.GONE);
 
+//        userInfo();
+//        getFollowers();
+//        getNrPosts();
+//        myFotos();
+
+
+//        my_fotos.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                recyclerView.setVisibility(View.GONE);
+//                recyclerView_saves.setVisibility(View.VISIBLE);
+//            }
+//        });
+
+//        followers.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(getContext(), FollowersActivity.class);
+//                intent.putExtra("id", profileid);
+//                intent.putExtra("title", "Followers");
+//                startActivity(intent);
+//            }
+//        });
+
+//        following.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(getContext(), FollowersActivity.class);
+//                intent.putExtra("id", profileid);
+//                intent.putExtra("title", "Following");
+//                startActivity(intent);
+//            }
+//        });
+        if (!profileid.equals(curUserID))
+        {
+            btn_follow.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    db.collection("Users").document(curUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                        {
+                            User usr = task.getResult().toObject(User.class);
+
+                            if (usr.getFollowing().contains(profileid))
+                            {
+                                usr.getFollowing().remove(profileid);
+                            }
+                            else
+                            {
+
+                                usr.getFollowing().add(profileid);
+                            }
+                            db.collection("Users").document(curUserID).set(usr);
+                        }
+                    });
+                    db.collection("Users").document(profileid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                    {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                        {
+                            User usr = task.getResult().toObject(User.class);
+                            if (usr.getFollower().contains(curUserID))
+                            {
+                                usr.getFollower().remove(curUserID);
+                                btn_follow.setText("FOLLOW");
+                            }
+                            else
+                            {
+                                String notifyID = UUID.randomUUID().toString();
+                                Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn","");
+                                db.collection("Notifications").document(notifyID).set(followNotify);
+                                usr.getFollower().add(curUserID);
+                                btn_follow.setText("FOLLOWED");
+                            }
+
+                            db.collection("Users").document(usr.getId()).set(usr);
+                            userInfo();
+                        }
+                    });
+                }
+            });
+            loadFotos();
+        }
         userInfo();
-        getFollowers();
-        getNrPosts();
-        myFotos();
-//        mysaves();
-
-        if (profileid.equals(firebaseUser.getUid()))
-        {
-            editprofile.setText("Edit Profile");
-        }
-        else
-        {
-            checkFollow();
-            saved_fotos.setVisibility(View.GONE);
-        }
-
-        editprofile.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                String btn = editprofile.getText().toString();
-
-                if (btn.equals("Edit Profile"))
-                {
-                    startActivity(new Intent(getContext(), EditProfileActivity.class));
-                }
-                else if (btn.equals("follow"))
-                {
-                    followUser();
-                }
-                else if (btn.equals("following"))
-                {
-                    unfollowUser();
-                }
-            }
-        });
-
-        my_fotos.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                recyclerView.setVisibility(View.GONE);
-                recyclerView_saves.setVisibility(View.VISIBLE);
-            }
-        });
-
-        followers.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("id", profileid);
-                intent.putExtra("title", "Followers");
-                startActivity(intent);
-            }
-        });
-
-        following.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Intent intent = new Intent(getContext(), FollowersActivity.class);
-                intent.putExtra("id", profileid);
-                intent.putExtra("title", "Following");
-                startActivity(intent);
-            }
-        });
-
         return view;
-    }
-
-    private void followUser()
-    {
-        HashMap<String, Object> followMap = new HashMap<>();
-        followMap.put("userid", firebaseUser.getUid());
-
-        db.collection("Follow").document(profileid)
-                .collection("Followers")
-                .document(firebaseUser.getUid())
-                .set(followMap)
-                .addOnCompleteListener(new OnCompleteListener<Void>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            addNotifications();
-                            editprofile.setText("following");
-                        }
-                        else
-                        {
-                            Toast.makeText(getContext(), "Failed to follow user!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void unfollowUser()
-    {
-        db.collection("Follow").document(profileid)
-                .collection("Followers")
-                .document(firebaseUser.getUid())
-                .delete()
-                .addOnCompleteListener(new OnCompleteListener<Void>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task)
-                    {
-                        if (task.isSuccessful())
-                        {
-                            editprofile.setText("follow");
-                        }
-                        else
-                        {
-                            Toast.makeText(getContext(), "Failed to unfollow user!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
-    }
-
-    private void addNotifications()
-    {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userid", firebaseUser.getUid());
-        hashMap.put("text", "started following you");
-        hashMap.put("postid", "");
-        hashMap.put("ispost", false);
-
-        db.collection("Notifications").document(profileid)
-                .collection("Notifications")
-                .add(hashMap)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task)
-                    {
-                        if (!task.isSuccessful())
-                        {
-                            Toast.makeText(getContext(), "Failed to add notification!", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
     }
 
     private void userInfo()
     {
+
         db.collection("Users").document(profileid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
@@ -281,92 +210,46 @@ public class ProfileFragment extends Fragment
                                         .into(image_profile);
                                 username.setText(user.getUsername());
                                 fullname.setText(user.getFullname());
+                                if (user.getPost() != null)
+                                    posts.setText(String.valueOf(user.getPost().size()));
+                                else
+                                    posts.setText("0");
+                                if (user.getFollower() != null)
+                                    followers.setText(String.valueOf(user.getFollower().size()));
+                                else
+                                    followers.setText("0");
+                                if (user.getFollowing() != null)
+                                    following.setText(String.valueOf(user.getFollowing().size()));
+                                else
+                                    following.setText("0");
                                 bio.setText(user.getBio());
+                                if (profileid.equals(curUserID))
+                                {
+                                    btn_follow.setText("EDIT PROFILE");
+
+                                }
+                                else
+                                {
+                                    if (user.getFollower().contains(String.valueOf(firebaseUser.getUid())))
+                                    {
+                                        btn_follow.setText("FOLLOWED");
+                                    }
+                                    else
+                                    {
+                                        btn_follow.setText("FOLLOW");
+                                    }
+
+                                }
+                                loadFotos();
                             }
                         }
                     }
                 });
+
     }
 
-    private void checkFollow()
-    {
-        db.collection("Follow").document(firebaseUser.getUid())
-                .collection("Following")
-                .document(profileid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task)
-                    {
-                        if (task.isSuccessful() && task.getResult() != null)
-                        {
-                            DocumentSnapshot document = task.getResult();
-                            if (document.exists())
-                            {
-                                editprofile.setText("following");
-                            }
-                            else
-                            {
-                                editprofile.setText("follow");
-                            }
-                        }
-                    }
-                });
-    }
 
-    private void getFollowers()
-    {
-        db.collection("Follow").document(profileid)
-                .collection("Followers")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful() && task.getResult() != null)
-                        {
-                            followers.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
-
-        db.collection("Follow").document(profileid)
-                .collection("Following")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful() && task.getResult() != null)
-                        {
-                            following.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
-    }
-
-    private void getNrPosts()
-    {
-        db.collection("Posts")
-                .whereEqualTo("publisher", profileid)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-                {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task)
-                    {
-                        if (task.isSuccessful() && task.getResult() != null)
-                        {
-                            posts.setText(String.valueOf(task.getResult().size()));
-                        }
-                    }
-                });
-    }
-
-    private void myFotos()
+    private void loadFotos()
     {
         db.collection("Posts")
                 .whereEqualTo("publisher", profileid)
@@ -382,7 +265,7 @@ public class ProfileFragment extends Fragment
                             for (DocumentSnapshot document : task.getResult().getDocuments())
                             {
                                 Post post = document.toObject(Post.class);
-                                postList.add(0, post);
+                                postList.add(post);
                             }
                             myFotoAdapter.notifyDataSetChanged();
                         }

@@ -35,6 +35,47 @@ public class User
     private String bio;
     private ArrayList<String> follower;
     private ArrayList<String> following;
+
+    public ArrayList<String> getFollower()
+    {
+        return follower;
+    }
+
+    public void setFollower(ArrayList<String> follower)
+    {
+        this.follower = follower;
+    }
+
+    public ArrayList<String> getFollowing()
+    {
+        return following;
+    }
+
+    public void setFollowing(ArrayList<String> following)
+    {
+        this.following = following;
+    }
+
+    public ArrayList<String> getPost()
+    {
+        return post;
+    }
+
+    public void setPost(ArrayList<String> post)
+    {
+        this.post = post;
+    }
+
+    public ArrayList<String> getSave()
+    {
+        return save;
+    }
+
+    public void setSave(ArrayList<String> save)
+    {
+        this.save = save;
+    }
+
     private ArrayList<String> post;
     private ArrayList<String> save;
 

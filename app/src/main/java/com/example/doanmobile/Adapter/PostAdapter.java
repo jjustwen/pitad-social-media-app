@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.doanmobile.Fragment.PostDetailFragment;
+import com.example.doanmobile.Fragment.ProfileFragment;
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.R;
@@ -98,20 +99,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                 if (post.getLike().contains(curUserID))
                 {
                     post.getLike().remove(curUserID);
-                    holder.heart.setImageResource(R.drawable.ic_heart_after);
+                    holder.heart.setImageResource(R.drawable.ic_heart);
                 }
                 else
                 {
                     //Nếu tự like thì ko cần thông báo lên
-                    if (post.getPublisher().equals(curUserID))
+                    if (!post.getPublisher().equals(curUserID))
                     {
                         String heart_notify_id = UUID.randomUUID().toString();
                         Notification heart_notify = new Notification(heart_notify_id, post.getPublisher(), curUserID, "thích bài viết của bạn", post.getPostid());
                         db.collection("Notifications").document(heart_notify_id).set(heart_notify);
                     }
-
                     post.getLike().add(curUserID);
-                    holder.heart.setImageResource(R.drawable.ic_heart);
+                    holder.heart.setImageResource(R.drawable.ic_heart_after);
                 }
                 notifyItemChanged(position);
                 db.collection("Posts").document(post.getPostid()).set(post);
@@ -130,7 +130,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         }
         holder.publish_date.setText(post.getPublish_date());
         holder.description.setText(post.getDescription());
+        holder.username.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                SharedPreferences.Editor editor = context.getSharedPreferences("PREFS", Context.MODE_PRIVATE).edit();
+                editor.putString("profileid", post.getPublisher());
+                editor.apply();
 
+                ((FragmentActivity) context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProfileFragment()).commit();
+            }
+        });
         holder.post_image.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -153,17 +165,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
-        //        public ImageView post_image;
-//
-//        public ViewHolder(@NonNull View itemView) {
-//            super(itemView);
-//
-//            post_image = itemView.findViewById(R.id.post_image);
-//        }
+
         public ImageView image_profile;
         public ImageView post_image;
-//        public TextView save;
-//        public ImageView more;
 
         public TextView username;
         public TextView likes;

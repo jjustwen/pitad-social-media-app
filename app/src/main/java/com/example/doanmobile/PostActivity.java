@@ -18,12 +18,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
+import com.example.doanmobile.Model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -131,30 +134,50 @@ public class PostActivity extends AppCompatActivity
                         String currentUserID = FirebaseAuth.getInstance().getCurrentUser().getUid();
                         String postID = UUID.randomUUID().toString();
                         String notifyID = UUID.randomUUID().toString();
-                        Post post = new Post(postID, myUrl, description.getText().toString(), currentUserID);
-                        Notification notification = new Notification(notifyID, currentUserID, "", "đã đăng bài viết mới", postID);
-                        db.collection("Notifications").document(notifyID).set(notification);
-                        db.collection("Posts").document(postID).set(post)
-                                .addOnCompleteListener(new OnCompleteListener<Void>()
-                                {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Void> task)
-                                    {
-                                        if (task.isSuccessful())
-                                        {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(PostActivity.this, "Đăng thành công", Toast.LENGTH_SHORT).show();
-                                            startActivity(new Intent(PostActivity.this, MainActivity.class));
-                                            finish();
-                                        }
-                                        else
-                                        {
+                        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                            {
+                                User usr = task.getResult().toObject(User.class);
+                                usr.getPost().add(postID);
+                                db.collection("Users").document(currentUserID).set(usr);
+                            }
+                        });
+                        db.collection("Posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task)
+                            {
+                                Post post = new Post(postID, myUrl, description.getText().toString(), currentUserID, task.getResult().size() + 1);
+                                Notification notification = new Notification(notifyID, currentUserID, "", "đã đăng bài viết mới", postID);
 
-                                            progressDialog.dismiss();
-                                            Toast.makeText(PostActivity.this, "Đăng không thành công", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+
+                                db.collection("Notifications").document(notifyID).set(notification);
+                                db.collection("Posts").document(postID).set(post)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>()
+                                        {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task)
+                                            {
+                                                if (task.isSuccessful())
+                                                {
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(PostActivity.this, "Đăng thành công", Toast.LENGTH_SHORT).show();
+                                                    startActivity(new Intent(PostActivity.this, MainActivity.class));
+                                                    finish();
+                                                }
+                                                else
+                                                {
+
+                                                    progressDialog.dismiss();
+                                                    Toast.makeText(PostActivity.this, "Đăng không thành công", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                        });
+                            }
+                        });
+
                     }
                     else
                     {
