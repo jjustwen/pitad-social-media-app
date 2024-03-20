@@ -177,7 +177,6 @@ public class PostActivity extends AppCompatActivity
                                         });
                             }
                         });
-
                     }
                     else
                     {

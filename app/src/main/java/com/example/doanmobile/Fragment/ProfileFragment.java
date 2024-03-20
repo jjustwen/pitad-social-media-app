@@ -91,13 +91,6 @@ public class ProfileFragment extends Fragment
 //        myFotoAdapter_saves = new MyFotoAdapter(getContext(), postList_saves);
 //        recyclerView_saves.setAdapter(myFotoAdapter_saves);
 
-
-//        userInfo();
-//        getFollowers();
-//        getNrPosts();
-//        myFotos();
-
-
 //        my_fotos.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -151,7 +144,6 @@ public class ProfileFragment extends Fragment
                             }
                             else
                             {
-
                                 usr.getFollowing().add(profileid);
                             }
                             db.collection("Users").document(curUserID).set(usr);
@@ -175,6 +167,7 @@ public class ProfileFragment extends Fragment
                                 db.collection("Notifications").document(notifyID).set(followNotify);
                                 usr.getFollower().add(curUserID);
                                 btn_follow.setText("FOLLOWED");
+                                btn_follow.setBackgroundResource(R.color.colorAccent);
                             }
 
                             db.collection("Users").document(usr.getId()).set(usr);
@@ -226,13 +219,13 @@ public class ProfileFragment extends Fragment
                                 if (profileid.equals(curUserID))
                                 {
                                     btn_follow.setText("EDIT PROFILE");
-
                                 }
                                 else
                                 {
                                     if (user.getFollower().contains(String.valueOf(firebaseUser.getUid())))
                                     {
                                         btn_follow.setText("FOLLOWED");
+                                        btn_follow.setBackgroundResource(R.color.colorAccent);
                                     }
                                     else
                                     {
@@ -245,7 +238,6 @@ public class ProfileFragment extends Fragment
                         }
                     }
                 });
-
     }
 
 
