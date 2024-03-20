@@ -1,6 +1,7 @@
 package com.example.doanmobile.Fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,9 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.doanmobile.Adapter.MyFotoAdapter;
+import com.example.doanmobile.EditProfileActivity;
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
+import com.example.doanmobile.OptionsActivity;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -82,7 +85,15 @@ public class ProfileFragment extends Fragment
         postList = new ArrayList<>();
         myFotoAdapter = new MyFotoAdapter(getContext(), postList);
         recyclerView.setAdapter(myFotoAdapter);
-
+        options.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), OptionsActivity.class);
+                startActivity(intent);
+            }
+        });
 //        recyclerView_saves = view.findViewById(R.id.recycler_view_save);
 //        recyclerView_saves.setHasFixedSize(true);
 //        LinearLayoutManager linearLayoutManager1 = new GridLayoutManager(getContext(), 3);
@@ -124,6 +135,7 @@ public class ProfileFragment extends Fragment
 //                startActivity(intent);
 //            }
 //        });
+
         if (!profileid.equals(curUserID))
         {
             btn_follow.setOnClickListener(new View.OnClickListener()
@@ -163,7 +175,7 @@ public class ProfileFragment extends Fragment
                             else
                             {
                                 String notifyID = UUID.randomUUID().toString();
-                                Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn","");
+                                Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn", "");
                                 db.collection("Notifications").document(notifyID).set(followNotify);
                                 usr.getFollower().add(curUserID);
                                 btn_follow.setText("FOLLOWED");
@@ -177,6 +189,18 @@ public class ProfileFragment extends Fragment
                 }
             });
             loadFotos();
+        }
+        else
+        {
+            btn_follow.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    Intent intent = new Intent(getContext(), EditProfileActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
         userInfo();
         return view;
