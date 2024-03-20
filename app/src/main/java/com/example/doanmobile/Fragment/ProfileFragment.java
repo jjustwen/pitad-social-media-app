@@ -254,6 +254,7 @@ public class ProfileFragment extends Fragment
                                     else
                                     {
                                         btn_follow.setText("FOLLOW");
+                                        btn_follow.setBackgroundResource(R.color.colorBlack);
                                     }
 
                                 }
