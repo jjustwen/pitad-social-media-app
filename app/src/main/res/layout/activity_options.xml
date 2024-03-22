@@ -5,44 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/wall"
     tools:context=".OptionsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:id="@+id/toolbar"
-        android:background="?android:attr/windowBackground"/>
+        android:background="@drawable/profilebartop"/>
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"/>
+        android:layout_gravity="center"
+        android:background="#000"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/settings"
         android:text="Cài đặt"
+        android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
 
     <View
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"/>
+        android:layout_gravity="center"
+        android:background="#000"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/logout"
         android:text="Đăng xuất"
+        android:textStyle="bold"
         android:textColor="@color/colorPrimaryDark"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
-
     <View
-        android:layout_width="match_parent"
+        android:layout_width="400dp"
         android:layout_height="1dp"
-        android:background="@color/colorAccent"/>
+        android:layout_gravity="center"
+        android:background="#000"/>
 </LinearLayout>

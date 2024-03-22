@@ -3,19 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wall"
     tools:context=".Fragment.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:layout_height="60dp"
+        android:background="@drawable/profilebartop">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:background="@color/colorBlack">
+            android:layout_height="55dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="username"
-                    android:textColor="#FFFFFF"
+                    android:textColor="#000000"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -56,9 +56,15 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:layout_width="400dp"
+                android:layout_height="1dp"
+                android:layout_gravity="center" />
+
+            <LinearLayout
                 android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="horizontal"
                 android:padding="16dp">
 
@@ -92,14 +98,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="posts" />
+                                android:text="posts"
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
@@ -115,14 +122,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="followers" />
+                                android:text="followers"
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
@@ -138,14 +146,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/colorPrimaryDark"
+                                android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="following" />
+                                android:text="following"
+                                android:textColor="@color/black" />
 
                         </LinearLayout>
 
@@ -155,9 +164,10 @@
                         android:id="@+id/btn_follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#000000"
+                        android:background="@color/black"
                         android:text="FOLLOW"
-                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:textColor="#EFBC9B"
                         android:textSize="15sp" />
 
                 </LinearLayout>
@@ -168,6 +178,7 @@
                 android:id="@+id/mid_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -188,35 +199,42 @@
                     android:layout_marginTop="5dp"
                     android:maxLines="5"
                     android:text="bio"
-                    android:textColor="@color/colorPrimaryDark" />
+                    android:textColor="@color/black" />
 
             </LinearLayout>
-
+            <LinearLayout
+                android:layout_width="400dp"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_margin="3dp"
+                android:background="#000" />
             <LinearLayout
                 android:id="@+id/last_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_marginTop="5dp"
-                android:background="@drawable/button_black"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/my_fotos"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:layout_margin="1dp"
                     android:layout_weight="1"
-                    android:background="#000000"
+                    android:background="@android:color/transparent"
                     android:src="@drawable/baseline_grid_3x3_24" />
-
+                <LinearLayout
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="3dp"
+                    android:background="#000" />
                 <ImageButton
                     android:id="@+id/saved_fotos"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-                    android:layout_margin="1dp"
+
                     android:layout_weight="1"
-                    android:background="#000000"
+                    android:background="@android:color/transparent"
                     android:src="@drawable/baseline_bookmark_border_24" />
 
             </LinearLayout>
@@ -226,8 +244,8 @@
                 android:layout_width="400dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:layout_margin="5dp"
-                android:background="@color/colorAccent" />
+                android:layout_margin="3dp"
+                android:background="#000" />
 
             <LinearLayout
                 android:layout_width="match_parent"

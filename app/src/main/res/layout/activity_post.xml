@@ -5,19 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/wall"
     tools:context=".PostActivity">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
         android:id="@+id/bar">
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground"
+            android:layout_height="60dp"
+            android:background="@drawable/profilebartop"
             android:id="@+id/toolbar">
 
             <RelativeLayout
@@ -36,11 +36,12 @@
                     android:layout_height="wrap_content"
                     android:text="ĐĂNG"
                     android:id="@+id/post"
+                    android:textStyle="bold"
                     android:textSize="16sp"
                     android:layout_marginEnd="13dp"
                     android:layout_centerVertical="true"
                     android:layout_alignParentEnd="true"
-                    android:textColor="@color/colorPrimary"/>
+                    android:textColor="@color/black"/>
 
             </RelativeLayout>
 
@@ -59,7 +60,6 @@
             android:layout_height="200dp"
             android:layout_gravity="center"
             android:scaleType="centerInside"
-            android:src="@drawable/default_avatar"
             android:id="@+id/image_added"/>
 
         <EditText

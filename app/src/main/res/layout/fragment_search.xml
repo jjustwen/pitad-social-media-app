@@ -3,19 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/wall"
     tools:context=".Fragment.SearchFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:layout_height="60dp"
+        android:background="@drawable/profilebartop">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/windowBackground">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -26,12 +26,17 @@
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="20dp"
                 android:background="@android:color/transparent"
                 android:hint="Tìm kiếm..." />
 
         </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="400dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#D6DAC8" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -40,11 +45,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/bar" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_tags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recycler_view_users" />
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/recycler_view_tags"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/recycler_view_users" />-->
 
 
 </RelativeLayout>

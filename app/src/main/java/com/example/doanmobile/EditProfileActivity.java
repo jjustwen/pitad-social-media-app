@@ -195,7 +195,8 @@ public class EditProfileActivity extends AppCompatActivity
                         Toast.makeText(EditProfileActivity.this, "Cập nhật không thành công", Toast.LENGTH_LONG).show();
                     }
                 });
-
+        startActivity(new Intent(EditProfileActivity.this, MainActivity.class));
+        finish();
 
     }
 

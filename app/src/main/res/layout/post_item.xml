@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#EFBC9B">
 
     <ImageView
         android:id="@+id/more"
@@ -22,7 +22,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -52,7 +52,7 @@
                 android:id="@+id/post_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@color/cardview_shadow_start_color"
+                android:background="#9B4444"
                 android:src="@drawable/img_1"
                 app:layout_constraintDimensionRatio="1:1"
                 tools:ignore="MissingConstraints" />
@@ -71,7 +71,7 @@
                 android:id="@+id/like"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/white"
+                android:background="@android:color/transparent"
                 android:src="@drawable/ic_heart" />
 
             <TextView
@@ -80,6 +80,7 @@
                 android:layout_height="30dp"
                 android:layout_toEndOf="@id/like"
                 android:paddingStart="5dp"
+               android:textColor="@color/black"
                 android:text="300"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -109,7 +110,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             android:text="06-03-2024"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="15sp"
@@ -118,10 +119,10 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/colorAccent" />
+            android:layout_marginEnd="5dp"
+            android:background="#9B4444" />
 
 
     </LinearLayout>
