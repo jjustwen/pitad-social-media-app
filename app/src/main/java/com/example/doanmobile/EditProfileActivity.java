@@ -159,6 +159,7 @@ public class EditProfileActivity extends AppCompatActivity
                 updateProfile(fullname.getText().toString(),
                         username.getText().toString(),
                         bio.getText().toString());
+                startActivity(new Intent(EditProfileActivity.this, ProfileFragment.class));
             }
         });
     }

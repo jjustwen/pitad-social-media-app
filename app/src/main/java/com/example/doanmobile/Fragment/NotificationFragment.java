@@ -57,6 +57,7 @@ public class NotificationFragment extends Fragment
 
     private void loadNotification()
     {
+
         db.collection("Notifications").whereEqualTo("userid", currentUserID)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
@@ -71,6 +72,8 @@ public class NotificationFragment extends Fragment
                             for (DocumentSnapshot document : task.getResult().getDocuments())
                             {
                                 Notification notification = document.toObject(Notification.class);
+                                if(notification.getUserid_interaction().equals(""))
+                                    continue;
                                 notificationList.add(0, notification);
                             }
                             notificationAdapter.notifyDataSetChanged();

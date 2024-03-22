@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         viewPager = findViewById(R.id.fragment_container);
         viewPager.setAdapter(viewPagerAdapter);
-        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
+//        bottomNavigationView.setOnNavigationItemSelectedListener(navigationItemSelectedListener);
 
         Bundle intent = getIntent().getExtras();
         if (intent != null)
@@ -65,21 +65,20 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position)
             {
-                if (position == R.id.nav_home)
+                switch (position)
                 {
-                    bottomNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
-                }
-                else if (position == R.id.nav_search)
-                {
-                    bottomNavigationView.getMenu().findItem(R.id.nav_search).setChecked(true);
-                }
-                else if (position == R.id.nav_heart)
-                {
-                    bottomNavigationView.getMenu().findItem(R.id.nav_heart).setChecked(true);
-                }
-                else if (position == R.id.nav_profile)
-                {
-                    bottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
+                    case 0:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_home).setChecked(true);
+                        break;
+                    case 1:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_search).setChecked(true);
+                        break;
+                    case 2:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_heart).setChecked(true);
+                        break;
+                    case 3:
+                        bottomNavigationView.getMenu().findItem(R.id.nav_profile).setChecked(true);
+                        break;
                 }
             }
 
@@ -87,6 +86,38 @@ public class MainActivity extends AppCompatActivity
             public void onPageScrollStateChanged(int state)
             {
 
+            }
+        });
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
+        {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item)
+            {
+                int itemid = item.getItemId();
+                if (itemid == R.id.nav_home)
+                {
+                    viewPager.setCurrentItem(0);
+                }
+                else if (itemid == R.id.nav_search)
+                {
+                    viewPager.setCurrentItem(1);
+                }
+                else if (itemid == R.id.nav_add)
+                {
+                    startActivity(new Intent(getBaseContext(), PostActivity.class));
+                }
+                else if (itemid == R.id.nav_heart)
+                {
+                    viewPager.setCurrentItem(2);
+                }
+                else if (itemid == R.id.nav_profile)
+                {
+                    SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
+                    editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                    editor.apply();
+                    viewPager.setCurrentItem(3);
+                }
+                return true;
             }
         });
     }
@@ -101,12 +132,12 @@ public class MainActivity extends AppCompatActivity
                     int id = menuItem.getItemId();
                     if (id == R.id.nav_home)
                     {
-                        viewPager.setCurrentItem(0);
+
                         selecterFragment = new HomeFragment();
                     }
                     else if (id == R.id.nav_search)
                     {
-                        viewPager.setCurrentItem(1);
+
                         selecterFragment = new SearchFragment();
                     }
                     else if (id == R.id.nav_add)
@@ -116,12 +147,12 @@ public class MainActivity extends AppCompatActivity
                     }
                     else if (id == R.id.nav_heart)
                     {
-                        viewPager.setCurrentItem(2);
+
                         selecterFragment = new NotificationFragment();
                     }
                     else if (id == R.id.nav_profile)
                     {
-                        viewPager.setCurrentItem(3);
+
                         SharedPreferences.Editor editor = getSharedPreferences("PREFS", MODE_PRIVATE).edit();
                         editor.putString("profileid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                         editor.apply();
