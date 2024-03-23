@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wall"
+    android:background="@drawable/rb"
     tools:context=".Fragment.SearchFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/profilebartop">
+        android:background="@drawable/bar4">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -23,9 +23,11 @@
                 android:src="@drawable/ic_search" />
 
             <EditText
+                android:textStyle="bold"
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#f6ceb4"
                 android:layout_marginStart="20dp"
                 android:background="@android:color/transparent"
                 android:hint="Tìm kiếm..." />
@@ -33,10 +35,10 @@
         </androidx.appcompat.widget.Toolbar>
 
         <LinearLayout
-            android:layout_width="400dp"
+            android:layout_width="420dp"
             android:layout_height="1dp"
             android:layout_gravity="center"
-            android:background="#D6DAC8" />
+            android:background="#f6ceb4" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,12 +46,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/bar" />
-
-    <!--    <androidx.recyclerview.widget.RecyclerView-->
-    <!--        android:id="@+id/recycler_view_tags"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/recycler_view_users" />-->
 
 
 </RelativeLayout>

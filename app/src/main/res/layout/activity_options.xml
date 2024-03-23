@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/wall"
+    android:background="@drawable/pink"
     tools:context=".OptionsActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:id="@+id/toolbar"
-        android:background="@drawable/profilebartop"/>
+        android:background="@drawable/bar"/>
 
     <View
         android:layout_width="400dp"
@@ -24,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/settings"
-        android:text="Cài đặt"
+        android:text="CÀI ĐẶT"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/black"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
 
@@ -40,9 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/logout"
-        android:text="Đăng xuất"
+        android:text="ĐĂNG XUẤT"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/black"
         android:layout_margin="8dp"
         android:textSize="18sp"/>
     <View

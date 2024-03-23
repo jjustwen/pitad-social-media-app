@@ -3,6 +3,7 @@ package com.example.doanmobile.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -171,6 +172,8 @@ public class ProfileFragment extends Fragment
                             {
                                 usr.getFollower().remove(curUserID);
                                 btn_follow.setText("FOLLOW");
+                                btn_follow.setBackgroundColor(Color.parseColor("#666bba"));
+                                btn_follow.setTextColor(Color.parseColor("#f6ceb4"));
                             }
                             else
                             {
@@ -179,7 +182,8 @@ public class ProfileFragment extends Fragment
                                 db.collection("Notifications").document(notifyID).set(followNotify);
                                 usr.getFollower().add(curUserID);
                                 btn_follow.setText("FOLLOWED");
-                                btn_follow.setBackgroundResource(R.color.colorAccent);
+                                btn_follow.setBackgroundColor(Color.parseColor("#f6ceb4"));
+                                btn_follow.setTextColor(Color.parseColor("#666bba"));
                             }
 
                             db.collection("Users").document(usr.getId()).set(usr);
@@ -249,12 +253,15 @@ public class ProfileFragment extends Fragment
                                     if (user.getFollower().contains(String.valueOf(firebaseUser.getUid())))
                                     {
                                         btn_follow.setText("FOLLOWED");
-                                        btn_follow.setBackgroundResource(R.color.colorAccent);
+                                        btn_follow.setBackgroundColor(Color.parseColor("#f6ceb4"));
+                                        btn_follow.setTextColor(Color.parseColor("#666bba"));
                                     }
                                     else
                                     {
                                         btn_follow.setText("FOLLOW");
-                                        btn_follow.setBackgroundResource(R.color.colorBlack);
+                                        btn_follow.setBackgroundColor(Color.parseColor("#666bba"));
+                                        btn_follow.setTextColor(Color.parseColor("#f6ceb4"));
+
                                     }
 
                                 }

@@ -6,17 +6,17 @@
     android:orientation="vertical"
     android:gravity="center"
     android:padding="12dp"
-    android:background="@drawable/wall"
+    android:background="@drawable/rainbow"
     tools:context=".RegisterActivity">
     <ImageView
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="80dp"
         android:src="@drawable/logo_pitad"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@color/white"
         android:hint="Tên hiển thị"
         android:layout_marginTop="15dp"
         android:padding="10dp"
@@ -37,23 +37,12 @@
             android:layout_marginEnd="10dp"
             android:id="@+id/availability_username"
             android:visibility="gone"/>
-
-<!--        <Button-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/button_background"-->
-<!--            android:text="KIỂM TRA"-->
-<!--            android:layout_gravity="end"-->
-<!--            android:layout_marginTop="5dp"-->
-<!--            android:id="@+id/check_username"-->
-<!--            android:textColor="@color/white"/>-->
-
     </LinearLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@color/white"
         android:hint="Họ và tên"
         android:layout_marginTop="15dp"
         android:padding="10dp"
@@ -62,7 +51,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@color/white"
         android:hint="Email"
         android:layout_marginTop="15dp"
         android:inputType="textEmailAddress"
@@ -71,7 +60,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@color/white"
         android:hint="Mật khẩu"
         android:layout_marginTop="15dp"
         android:inputType="textPassword"
@@ -80,7 +69,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_background"
+        android:background="@color/white"
         android:hint="Nhập lại mật khẩu"
         android:inputType="textPassword"
         android:layout_marginTop="15dp"
@@ -93,14 +82,15 @@
         android:id="@+id/register"
         android:text="ĐĂNG KÝ"
 
-        android:textColor="#EFBC9B"
-        android:background="@color/black"
+        android:textColor="#f6ceb4"
+        android:background="#666bba"
         android:layout_marginTop="15dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:text="Đã có tài khoản ? Đăng nhập"
         android:id="@+id/txt_login"
         android:layout_marginTop="10dp"/>

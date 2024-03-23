@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wall"
+    android:background="@drawable/flower"
     android:orientation="vertical"
     tools:context=".EditProfileActivity">
 
@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/profilebartop">
+            android:background="@drawable/bar4">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,8 +37,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/close"
+                    android:textStyle="bold"
                     android:text="Chỉnh sửa trang cá nhân"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="#000"
                     android:textSize="18sp" />
 
                 <TextView
@@ -78,6 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textStyle="bold"
             android:text="Chỉnh sửa ảnh"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -87,7 +89,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background"
+            android:background="@color/white"
             android:hint="Họ và tên"
             android:inputType="textEmailAddress"
             android:padding="10dp" />
@@ -97,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background"
+            android:background="@color/white"
             android:hint="Tên hiển thị"
             android:padding="10dp" />
 
@@ -106,7 +108,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:background="@drawable/edit_text_background"
+            android:background="@color/white"
             android:padding="10dp"
             android:hint="Tiểu sử" />
 

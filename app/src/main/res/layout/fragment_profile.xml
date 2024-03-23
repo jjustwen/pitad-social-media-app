@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/wall"
+    android:background="@drawable/bowrain"
     tools:context=".Fragment.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/profilebartop">
+        android:background="@drawable/bar3">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -164,10 +164,10 @@
                         android:id="@+id/btn_follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/black"
+                        android:textColor="#f6ceb4"
                         android:text="FOLLOW"
                         android:textStyle="bold"
-                        android:textColor="#EFBC9B"
+                        android:background="#666bba"
                         android:textSize="15sp" />
 
                 </LinearLayout>
