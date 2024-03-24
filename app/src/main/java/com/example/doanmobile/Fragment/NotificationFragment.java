@@ -1,7 +1,6 @@
 package com.example.doanmobile.Fragment;
 
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.doanmobile.Adapter.NotificationAdapter;
 import com.example.doanmobile.Model.Notification;
+import com.example.doanmobile.Model.User;
 import com.example.doanmobile.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -58,28 +58,30 @@ public class NotificationFragment extends Fragment
     private void loadNotification()
     {
 
-        db.collection("Notifications").whereEqualTo("userid", currentUserID)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+        db.collection("Users").document(currentUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task)
+            {
+                User usr = task.getResult().toObject(User.class);
+                db.collection("Notifications").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
                 {
-                    @SuppressLint("NotifyDataSetChanged")
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task)
                     {
-                        if (task.isSuccessful() && task.getResult() != null)
+                        for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments())
                         {
-                            notificationList.clear();
-                            for (DocumentSnapshot document : task.getResult().getDocuments())
+                            Notification notification = documentSnapshot.toObject(Notification.class);
+                            if (notification.getUserid().equals(currentUserID) || usr.getFollowing().contains(notification.getUserid()))
                             {
-                                Notification notification = document.toObject(Notification.class);
-                                if(notification.getUserid_interaction().equals(""))
-                                    continue;
-                                notificationList.add(0, notification);
+                                notificationList.add(notification);
                             }
-                            notificationAdapter.notifyDataSetChanged();
                         }
+                        notificationAdapter.notifyDataSetChanged();
                     }
                 });
+            }
+        });
     }
 
 }

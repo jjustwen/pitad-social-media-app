@@ -73,7 +73,6 @@ public class SearchFragment extends Fragment {
         userAdapter = new UserAdapter(getContext(), mUsers, true);
         recyclerView.setAdapter(userAdapter);
 
-//        readUsers();
         search_bar.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -97,7 +96,6 @@ public class SearchFragment extends Fragment {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         Query query = db.collection("Users")
-                .orderBy("username")
                 .startAt(s)
                 .endAt(s + "\uf8ff");
 

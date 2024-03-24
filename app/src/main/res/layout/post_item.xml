@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#f6ceb4">
+    android:background="#041626">
 
     <ImageView
         android:id="@+id/more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="23dp"
         android:layout_marginEnd="10dp"
         android:src="@drawable/baseline_more_horiz_24" />
 
@@ -22,14 +22,14 @@
 
         <LinearLayout
             android:layout_width="320dp"
-            android:layout_height="70dp"
-            android:background="#f6ceb4"
+            android:layout_height="80dp"
+            android:background="#041626"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_profile"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/default_avatar" />
 
@@ -39,7 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="username"
-                android:textColor="@color/black"
+                android:layout_marginBottom="5dp"
+                android:textColor="#fff"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -54,7 +55,7 @@
                 android:id="@+id/post_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#666bba"
+                android:background="#1e8eab"
                 app:layout_constraintDimensionRatio="1:1"
                 tools:ignore="MissingConstraints" />
 
@@ -88,6 +89,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
+                android:background="@android:color/transparent"
                 android:src="@drawable/baseline_bookmark_border_24" />
 
         </RelativeLayout>
@@ -98,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:padding="0dp"
-            android:textColor="@color/black"
+            android:textColor="#fff"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -109,14 +111,14 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:text="caption here"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="#fff"
             android:textSize="20sp" />
 
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp">
+            android:layout_marginTop="80dp">
 
             <TextView
                 android:id="@+id/publish_date"
@@ -125,19 +127,19 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:text="06-03-2024"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="#fff"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
             <View
                 android:id="@+id/line"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
+                android:layout_below="@+id/publish_date"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="5dp"
-                android:layout_below="@+id/publish_date"
-                android:background="#9B4444" />
+                android:background="#1e8eab" />
         </RelativeLayout>
 
     </LinearLayout>

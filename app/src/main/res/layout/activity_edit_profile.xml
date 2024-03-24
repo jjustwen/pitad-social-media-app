@@ -3,21 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/flower"
+    android:background="#041626"
     android:orientation="vertical"
     tools:context=".EditProfileActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bar4">
+            android:background="#041626">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -37,10 +36,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/close"
-                    android:textStyle="bold"
                     android:text="Chỉnh sửa trang cá nhân"
-                    android:textColor="#000"
-                    android:textSize="18sp" />
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/save"
@@ -50,7 +49,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
                     android:text="LƯU"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -58,6 +57,11 @@
 
         </androidx.appcompat.widget.Toolbar>
 
+        <LinearLayout
+            android:layout_width="424dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#1e8eab" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -79,10 +83,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textStyle="bold"
             android:text="Chỉnh sửa ảnh"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/fullname"
@@ -109,8 +113,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@color/white"
-            android:padding="10dp"
-            android:hint="Tiểu sử" />
+            android:hint="Tiểu sử"
+            android:padding="10dp" />
 
     </LinearLayout>
 </LinearLayout>

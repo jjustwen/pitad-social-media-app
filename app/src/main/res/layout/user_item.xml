@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#E1F4FA"
+    android:background="#041626"
     android:padding="8dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:text="username"
-            android:textColor="@color/black"
+            android:textColor="#fff"
             android:textStyle="bold" />
 
         <TextView
@@ -33,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:textColor="#fff"
             android:text="Full Name" />
 
     </LinearLayout>
@@ -43,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
-        android:background="#666bba"
+        android:background="#004696"
         android:text="FOLLOW"
-        android:textColor="#f6ceb4" />
+        android:textColor="#fff" />
 </RelativeLayout>

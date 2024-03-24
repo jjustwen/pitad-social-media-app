@@ -73,14 +73,14 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
             if (user.getFollower().contains(curUserID))
             {
                 holder.btn_follow_user.setText("FOLLOWED");
-                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#f6ceb4"));
-                holder.btn_follow_user.setTextColor(Color.parseColor("#666bba"));
+                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#120460"));
+                holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
             }
             else
             {
                 holder.btn_follow_user.setText("FOLLOW");
-                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#666bba"));
-                holder.btn_follow_user.setTextColor(Color.parseColor("#f6ceb4"));
+                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#1e8eab"));
+                holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
             }
         }
 
@@ -127,8 +127,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                         {
                             usr.getFollower().remove(curUserID);
                             holder.btn_follow_user.setText("FOLLOW");
-                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#666bba"));
-                            holder.btn_follow_user.setTextColor(Color.parseColor("#f6ceb4"));
+                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#1e8eab"));
+                            holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
                         }
                         else
                         {
@@ -137,8 +137,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                             db.collection("Notifications").document(notifyID).set(followNotify);
                             usr.getFollower().add(curUserID);
                             holder.btn_follow_user.setText("FOLLOWED");
-                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#f6ceb4"));
-                            holder.btn_follow_user.setTextColor(Color.parseColor("#666bba"));
+                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#120460"));
+                            holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
                         }
 
                         db.collection("Users").document(usr.getId()).set(usr);

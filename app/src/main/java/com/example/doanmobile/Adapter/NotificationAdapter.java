@@ -59,10 +59,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         {
             getPostImage(holder.post_image, notification.getPostid());
         }
-
-
-
-
     }
 
     @Override

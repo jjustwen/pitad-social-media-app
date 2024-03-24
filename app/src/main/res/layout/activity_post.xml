@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/flower"
+    android:background="#041626"
     android:orientation="vertical"
     tools:context=".PostActivity">
 
@@ -17,7 +17,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="@drawable/bar2">
+            android:background="#041626">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -38,14 +38,18 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="13dp"
                     android:text="ĐĂNG"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
-
+        <LinearLayout
+            android:layout_width="424dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#1e8eab" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
@@ -65,9 +69,10 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_marginTop="15dp"
             android:hint="Nội dung bài viết..."
-            android:maxLines="5"
+            android:textColorHint="@color/white"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>

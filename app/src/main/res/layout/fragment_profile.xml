@@ -3,14 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bowrain"
+    android:background="#041626"
     tools:context=".Fragment.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bar">
+        android:background="#041626">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="username"
-                    android:textColor="#000000"
+                    android:textColor="#fff"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -42,7 +42,11 @@
             </RelativeLayout>
 
         </androidx.appcompat.widget.Toolbar>
-
+        <LinearLayout
+            android:layout_width="424dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:background="#1e8eab" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
@@ -64,7 +68,6 @@
                 android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F6CDB3"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
@@ -98,7 +101,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/black"
+                                android:textColor="#fff"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -106,7 +109,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="posts"
-                                android:textColor="@color/black" />
+                                android:textColor="#fff" />
 
                         </LinearLayout>
 
@@ -122,7 +125,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/black"
+                                android:textColor="#fff"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -130,7 +133,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="followers"
-                                android:textColor="@color/black" />
+                                android:textColor="#fff" />
 
                         </LinearLayout>
 
@@ -146,7 +149,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:text="0"
-                                android:textColor="@color/black"
+                                android:textColor="#fff"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
 
@@ -154,7 +157,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="following"
-                                android:textColor="@color/black" />
+                                android:textColor="#fff" />
 
                         </LinearLayout>
 
@@ -164,9 +167,9 @@
                         android:id="@+id/btn_follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#666bba"
+                        android:background="#004696"
                         android:text="FOLLOW"
-                        android:textColor="#f6ceb4"
+                        android:textColor="#fff"
                         android:textSize="15sp"
                         android:textStyle="bold" />
 
@@ -178,7 +181,7 @@
                 android:id="@+id/mid_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F6CDB3"
+
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -188,7 +191,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="1"
                     android:text="full name"
-                    android:textColor="#000000"
+                    android:textColor="#fff"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -199,21 +202,20 @@
                     android:layout_marginTop="5dp"
                     android:maxLines="5"
                     android:text="bio"
-                    android:textColor="@color/black" />
+                    android:textColor="#fff" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="400dp"
+                android:layout_width="424dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:background="#000" />
+                android:background="#1e8eab" />
 
             <LinearLayout
                 android:id="@+id/last_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#F6CDB3"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -221,7 +223,7 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:background="#F6CDB3"
+                    android:background="@android:color/transparent"
                     android:src="@drawable/baseline_grid_3x3_24" />
 
                 <LinearLayout
@@ -229,26 +231,25 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="3dp"
-                    android:background="#000" />
+                    android:background="#1e8eab" />
 
                 <ImageButton
                     android:id="@+id/saved_fotos"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
-
                     android:layout_weight="1"
-                    android:background="#F6CDB3"
+                    android:background="@android:color/transparent"
                     android:src="@drawable/baseline_bookmark_border_24" />
 
             </LinearLayout>
 
 
             <LinearLayout
-                android:layout_width="400dp"
+                android:layout_width="424dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
 
-                android:background="#000" />
+                android:background="#1e8eab" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,6 +257,7 @@
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginTop="2dp"
                     android:id="@+id/recycler_view_my_post"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
