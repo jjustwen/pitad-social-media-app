@@ -10,7 +10,7 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@drawable/bar3">
+        android:background="@drawable/bar">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -64,7 +64,7 @@
                 android:id="@+id/top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="#F6CDB3"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
@@ -164,11 +164,11 @@
                         android:id="@+id/btn_follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#f6ceb4"
-                        android:text="FOLLOW"
-                        android:textStyle="bold"
                         android:background="#666bba"
-                        android:textSize="15sp" />
+                        android:text="FOLLOW"
+                        android:textColor="#f6ceb4"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -178,7 +178,7 @@
                 android:id="@+id/mid_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="#F6CDB3"
                 android:orientation="vertical"
                 android:padding="12dp">
 
@@ -202,17 +202,18 @@
                     android:textColor="@color/black" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="400dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:layout_margin="3dp"
                 android:background="#000" />
+
             <LinearLayout
                 android:id="@+id/last_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:background="#F6CDB3"
                 android:orientation="horizontal">
 
                 <ImageButton
@@ -220,21 +221,23 @@
                     android:layout_width="0dp"
                     android:layout_height="45dp"
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                    android:background="#F6CDB3"
                     android:src="@drawable/baseline_grid_3x3_24" />
+
                 <LinearLayout
                     android:layout_width="2dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_margin="3dp"
                     android:background="#000" />
+
                 <ImageButton
                     android:id="@+id/saved_fotos"
                     android:layout_width="0dp"
                     android:layout_height="45dp"
 
                     android:layout_weight="1"
-                    android:background="@android:color/transparent"
+                    android:background="#F6CDB3"
                     android:src="@drawable/baseline_bookmark_border_24" />
 
             </LinearLayout>
@@ -244,7 +247,7 @@
                 android:layout_width="400dp"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:layout_margin="3dp"
+
                 android:background="#000" />
 
             <LinearLayout

@@ -76,7 +76,7 @@ public class ProfileFragment extends Fragment
         bio = view.findViewById(R.id.bio);
         my_fotos = view.findViewById(R.id.my_fotos);
         username = view.findViewById(R.id.username);
-//        saved_fotos = view.findViewById(R.id.saved_fotos);
+        saved_fotos = view.findViewById(R.id.saved_fotos);
 
         btn_follow = view.findViewById(R.id.btn_follow);
 
@@ -96,24 +96,23 @@ public class ProfileFragment extends Fragment
                 startActivity(intent);
             }
         });
-//        recyclerView_saves = view.findViewById(R.id.recycler_view_save);
-//        recyclerView_saves.setHasFixedSize(true);
-//        LinearLayoutManager linearLayoutManager1 = new GridLayoutManager(getContext(), 3);
-//        recyclerView_saves.setLayoutManager(linearLayoutManager1);
-//        postList_saves = new ArrayList<>();
-//        myFotoAdapter_saves = new MyFotoAdapter(getContext(), postList_saves);
-//        recyclerView_saves.setAdapter(myFotoAdapter_saves);
+        saved_fotos.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                loadSaveFoto();
+            }
+        });
 
-//        my_fotos.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                recyclerView.setVisibility(View.GONE);
-//                recyclerView_saves.setVisibility(View.VISIBLE);
-//            }
-//        });
-
+        my_fotos.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                loadFotos();
+            }
+        });
         followers.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -272,6 +271,34 @@ public class ProfileFragment extends Fragment
                 });
     }
 
+    private void loadSaveFoto()
+    {
+        db.collection("Users").document(profileid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task)
+            {
+                User usr = task.getResult().toObject(User.class);
+                db.collection("Posts").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                    {
+                        postList.clear();
+                        for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments())
+                        {
+                            Post save_post = documentSnapshot.toObject(Post.class);
+                            if (usr.getSave().contains(save_post.getPostid()))
+                            {
+                                postList.add(save_post);
+                            }
+                        }
+                        myFotoAdapter.notifyDataSetChanged();
+                    }
+                });
+            }
+        });
+    }
 
     private void loadFotos()
     {

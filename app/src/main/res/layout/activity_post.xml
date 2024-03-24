@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bowrain"
+    android:background="@drawable/flower"
     android:orientation="vertical"
     tools:context=".PostActivity">
 
@@ -59,8 +59,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_gravity="center"
-            android:background="@drawable/baseline_add_photo_alternate_24"
-            android:scaleType="centerInside" />
+            android:src="@drawable/baseline_add_photo_alternate_24" />
 
         <EditText
             android:id="@+id/description"

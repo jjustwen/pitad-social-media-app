@@ -27,8 +27,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:text="Photo"
-                    android:textColor="@color/colorPrimaryDark"/>
+                    android:text="Bài viết"
+                    android:textColor="@color/black"/>
 
             </RelativeLayout>
 

@@ -21,7 +21,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.example.doanmobile.Fragment.ProfileFragment;
 import com.example.doanmobile.Model.User;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -67,7 +66,6 @@ public class EditProfileActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
-
         close = findViewById(R.id.close);
         image_profile = findViewById(R.id.image_profile);
         save = findViewById(R.id.save);
@@ -87,8 +85,6 @@ public class EditProfileActivity extends AppCompatActivity
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e)
             {
-
-
                 if (e != null)
                 {
                     Log.w(TAG, "Lỗi", e);
@@ -110,7 +106,6 @@ public class EditProfileActivity extends AppCompatActivity
                                     .apply(RequestOptions.placeholderOf(R.drawable.default_avatar))
                                     .into(image_profile);
                         }
-
                     }
                 }
                 else
