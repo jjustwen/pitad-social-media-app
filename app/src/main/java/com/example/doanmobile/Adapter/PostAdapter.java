@@ -121,7 +121,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
         if (post.getLike() != null)
         {
-            holder.likes.setText(String.valueOf(post.getLike().size()));
+            holder.likes.setText(String.valueOf(post.getLike().size()) + " lượt thích");
         }
         else
         {

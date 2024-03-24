@@ -23,7 +23,7 @@
             android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".FollowersActivity"
+            android:name=".FollowerActivity"
             android:exported="false" />
         <activity
             android:name=".PostActivity"

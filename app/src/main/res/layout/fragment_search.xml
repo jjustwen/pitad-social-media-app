@@ -27,7 +27,7 @@
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#f6ceb4"
+                android:textColor="@color/black"
                 android:layout_marginStart="20dp"
                 android:background="@android:color/transparent"
                 android:hint="Tìm kiếm..." />

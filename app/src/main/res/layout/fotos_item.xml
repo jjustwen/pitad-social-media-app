@@ -11,5 +11,5 @@
 
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
-        android:background="#f6ceb4" />
+        android:background="#666bba" />
 </RelativeLayout>

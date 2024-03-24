@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.doanmobile.Adapter.MyFotoAdapter;
 import com.example.doanmobile.EditProfileActivity;
+import com.example.doanmobile.FollowerActivity;
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
@@ -113,17 +114,16 @@ public class ProfileFragment extends Fragment
 //            }
 //        });
 
-//        followers.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(getContext(), FollowersActivity.class);
-//                intent.putExtra("id", profileid);
-//                intent.putExtra("title", "Followers");
-//                startActivity(intent);
-//            }
-//        });
+        followers.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), FollowerActivity.class);
+                intent.putExtra("id", profileid);
+                startActivity(intent);
+            }
+        });
 
 //        following.setOnClickListener(new View.OnClickListener()
 //        {

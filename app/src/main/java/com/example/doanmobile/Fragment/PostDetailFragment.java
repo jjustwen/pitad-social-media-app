@@ -19,12 +19,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDetailFragment extends Fragment {
+public class PostDetailFragment extends Fragment
+{
 
     private String postid;
     private RecyclerView recyclerView;
@@ -33,7 +33,8 @@ public class PostDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         View view = inflater.inflate(R.layout.fragment_post_detail, container, false);
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("PREFS", Context.MODE_PRIVATE);
@@ -47,28 +48,33 @@ public class PostDetailFragment extends Fragment {
         postAdapter = new PostAdapter(getContext(), postList);
         recyclerView.setAdapter(postAdapter);
 
-//        readPost();
+        readIndividualPost();
 
         return view;
     }
 
-//    private void readPost() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        db.collection("Posts").document(postid)
-//                .get()
-//                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                        if (task.isSuccessful()) {
-//                            DocumentSnapshot document = task.getResult();
-//                            if (document.exists()) {
-//                                Post post = document.toObject(Post.class);
-//                                postList.clear();
-//                                postList.add(post);
-//                                postAdapter.notifyDataSetChanged();
-//                            }
-//                        }
-//                    }
-//                });
-//    }
+    private void readIndividualPost()
+    {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Posts").document(postid)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
+                {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task)
+                    {
+                        if (task.isSuccessful())
+                        {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists())
+                            {
+                                Post post = document.toObject(Post.class);
+                                postList.clear();
+                                postList.add(post);
+                                postAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                });
+    }
 }

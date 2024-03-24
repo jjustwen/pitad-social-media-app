@@ -29,7 +29,6 @@ public class HomeFragment extends Fragment
 {
 
     private RecyclerView recyclerView;
-    //    private PostAdapter postAdapter;
     private PostAdapter postAdapter;
     private ArrayList<Post> postList;
     FirebaseFirestore db;
