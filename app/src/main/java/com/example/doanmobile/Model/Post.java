@@ -1,27 +1,32 @@
 package com.example.doanmobile.Model;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 
 public class Post
 {
-    public int getStt()
-    {
+    private String postid;
+    private String postimage;
+    private String posttype;
+    private String publish_date;
+    private int stt;
+
+    public String getPosttype() {
+        return posttype;
+    }
+
+    public void setPosttype(String posttype) {
+        this.posttype = posttype;
+    }
+
+    public int getStt() {
         return stt;
     }
 
-    public void setStt(int stt)
-    {
+    public void setStt(int stt) {
         this.stt = stt;
     }
-
-    private int stt;
-    private String postid;
-    private String postimage;
-    private String publish_date;
 
     public String getPublish_date()
     {
@@ -38,7 +43,8 @@ public class Post
 
     public ArrayList<String> getLike()
     {
-        if (like != null) return like;
+        if (like != null)
+            return like;
         return new ArrayList<String>();
 
     }
@@ -50,7 +56,8 @@ public class Post
 
     public ArrayList<String> getSave()
     {
-        if (save != null) return save;
+        if (save != null)
+            return save;
         return new ArrayList<String>();
     }
 
@@ -67,21 +74,19 @@ public class Post
     {
     }
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    int number_post = 0;
-
-    public Post(String postid, String postimage, String description, String publisher, int stt)
+    public Post(String postid, String postimage,String posttype, String description, String publisher,int stt)
     {
         this.postid = postid;
         this.postimage = postimage;
+        this.posttype = posttype;
         this.description = description;
         this.publisher = publisher;
         like = new ArrayList<String>();
         save = new ArrayList<String>();
-        publish_date = LocalDate.now().toString();
         this.stt = stt;
-    }
 
+        publish_date = LocalDate.now().toString();
+    }
 
     public String getPostid()
     {

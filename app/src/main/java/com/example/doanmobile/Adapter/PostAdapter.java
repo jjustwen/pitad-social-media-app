@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -68,8 +71,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull ViewHolder holder, int position)
     {
         final Post post = post_list.get(position);
-        Glide.with(context).load(post.getPostimage()).into(holder.post_image);
-
+        if (post.getPosttype().equals("image"))
+        {
+            holder.video_added.setVisibility(View.GONE);
+            holder.image_added.setVisibility(View.VISIBLE);
+            Glide.with(context).load(post.getPostimage()).placeholder(R.drawable.placeholder).into(holder.image_added);
+        }
+        else
+        {
+            holder.video_added.setVisibility(View.VISIBLE);
+            holder.image_added.setVisibility(View.GONE);
+            Uri videoUri = Uri.parse(post.getPostimage());
+            holder.video_added.setVideoURI(videoUri);
+            holder.video_added.requestFocus();
+            holder.video_added.setOnPreparedListener(new MediaPlayer.OnPreparedListener()
+            {
+                @Override
+                public void onPrepared(MediaPlayer mp)
+                {
+                    mp.start();
+                }
+            });
+        }
         db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("Users").document(post.getPublisher());
         if (post.getLike().contains(curUserID))
@@ -195,7 +218,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                         new ProfileFragment()).commit();
             }
         });
-        holder.post_image.setOnClickListener(new View.OnClickListener()
+        holder.image_added.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -354,30 +377,35 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
 
     public static class ViewHolder extends RecyclerView.ViewHolder
     {
-        public ImageView more;
         public ImageView image_profile;
-        public ImageView post_image;
+        public ImageView image_added;
+        public VideoView video_added;
+        public ImageView like;
+        public ImageView comment;
+        public ImageView save;
+        public ImageView more;
 
         public TextView username;
         public TextView likes;
-        public ImageButton save;
+        public TextView publisher;
+        public TextView description;
+        public TextView comments;
         public ImageButton heart;
         public TextView publish_date;
-        public TextView description;
 
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
             more = itemView.findViewById(R.id.more);
             image_profile = itemView.findViewById(R.id.image_profile);
-            post_image = itemView.findViewById(R.id.post_image);
+            image_added = itemView.findViewById(R.id.image_added);
+            video_added = itemView.findViewById(R.id.video_added);
             likes = itemView.findViewById(R.id.number_like);
             username = itemView.findViewById(R.id.username);
             heart = itemView.findViewById(R.id.like);
             save = itemView.findViewById(R.id.save);
             publish_date = itemView.findViewById(R.id.publish_date);
             description = itemView.findViewById(R.id.description);
-
         }
     }
 

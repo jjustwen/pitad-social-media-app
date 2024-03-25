@@ -11,8 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="10dp"
+        android:layout_margin="15dp"
         android:src="@drawable/baseline_more_horiz_24" />
 
     <LinearLayout
@@ -21,15 +20,16 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="320dp"
-            android:layout_height="80dp"
-            android:background="#041626"
+            android:id="@+id/thisPost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/image_profile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_margin="10dp"
                 android:src="@drawable/default_avatar" />
 
@@ -39,11 +39,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:text="username"
-                android:layout_marginBottom="5dp"
                 android:textColor="#fff"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
 
         </LinearLayout>
 
@@ -51,14 +49,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <ImageView
-                android:id="@+id/post_image"
+                android:id="@+id/image_added"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="#1e8eab"
                 app:layout_constraintDimensionRatio="1:1"
                 tools:ignore="MissingConstraints" />
 
+            <VideoView
+                android:id="@+id/video_added"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:1"
+                tools:ignore="MissingConstraints" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -80,16 +84,18 @@
                 android:id="@+id/comment"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_toEndOf="@+id/like"
+                android:layout_toEndOf="@id/like"
                 android:background="@android:color/transparent"
-                android:src="@drawable/ic_comment" />
+                android:src="@drawable/ic_comment">
 
-            <ImageButton
+            </ImageButton>
+
+
+            <ImageView
                 android:id="@+id/save"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
-                android:background="@android:color/transparent"
                 android:src="@drawable/baseline_bookmark_border_24" />
 
         </RelativeLayout>
@@ -97,11 +103,12 @@
         <TextView
             android:id="@+id/number_like"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:padding="0dp"
+            android:layout_height="30dp"
+            android:layout_toEndOf="@id/like"
+            android:paddingStart="5dp"
+            android:text="300"
             android:textColor="#fff"
-            android:textSize="17sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -114,35 +121,26 @@
             android:textColor="#fff"
             android:textSize="20sp" />
 
-
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/publish_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp">
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="40dp"
+            android:text="06-03-2024"
+            android:textColor="#FFF"
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/publish_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="06-03-2024"
-                android:textColor="#fff"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="#1e8eab" />
 
-            <View
-                android:id="@+id/line"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/publish_date"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:background="#1e8eab" />
-        </RelativeLayout>
 
     </LinearLayout>
-
 
 </RelativeLayout>
