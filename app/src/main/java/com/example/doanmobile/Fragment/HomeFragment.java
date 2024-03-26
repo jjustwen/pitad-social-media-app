@@ -76,9 +76,11 @@ public class HomeFragment extends Fragment
                                 postList.add(post);
                             }
                             postAdapter.notifyDataSetChanged();
+                            recyclerView.scrollToPosition(0);
                         }
                     }
                 });
+
     }
 
 }

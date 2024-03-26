@@ -1,7 +1,9 @@
 package com.example.doanmobile.Model;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class Notification
 {
@@ -10,8 +12,18 @@ public class Notification
     private String userid_interaction;
     private String notifyContent;
     private String postid;
-    private String initNotifyTime; // Sử dụng String cho thời gian khi tạo thông báo
-    private String notifyDuration;
+
+    public String getNotifyTime()
+    {
+        return notifyTime;
+    }
+
+    public void setNotifyTime(String notifyTime)
+    {
+        this.notifyTime = notifyTime;
+    }
+
+    private String notifyTime;
 
     public String getNotifyid()
     {
@@ -76,90 +88,11 @@ public class Notification
         this.userid_interaction = userid_interaction;
         this.notifyContent = notifyContent;
         this.postid = postid;
-        LocalTime now = LocalTime.now();
-        this.initNotifyTime = now.toString();
-        this.notifyDuration = "0";
+        Date time = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
+        this.notifyTime = dateFormat.format(time);
     }
 
-    public String getInitNotifyTime()
-    {
-        return initNotifyTime;
-    }
 
-    public String getNotifyDuration()
-    {
-        Duration durationNotify;
-        LocalTime initTime = LocalTime.parse(initNotifyTime); // Chuyển đổi thành LocalTime
-        if (LocalTime.now().compareTo(initTime) < 0)
-        {
-            LocalTime time_a_day = LocalTime.MAX;
-            // Tính khoảng thời gian từ initTime đến time_a_day
-           durationNotify = Duration.between(initTime, time_a_day);
-
-            // Thêm khoảng thời gian từ thời điểm hiện tại đến thời điểm hiện tại + durationNotify
-            durationNotify = durationNotify.plusHours(LocalTime.now().getHour()).plusMinutes(LocalTime.now().getMinute());
-        }
-        else
-        {
-            durationNotify = Duration.between(initTime, LocalTime.now());
-        }
-        long hours = durationNotify.toHours(); // Lấy số giờ
-        long minutes = durationNotify.toMinutesPart(); // Lấy số phút
-        long seconds = durationNotify.toSecondsPart(); // Lấy số giây
-
-        if (hours > 0)
-        {
-            if (minutes != 0)
-            {
-                return hours + " giờ " + minutes + " phút " + "trước";
-            }
-            else return hours + " giờ " + "trước";
-        }
-        else if (minutes > 0)
-        {
-            return minutes + " phút " + "trước";
-        }
-        else
-        {
-            return seconds + " giây " + "trước";
-        }
-    }
-//    public String getNotifyDuration()
-//    {
-//        LocalDateTime initTime = LocalDateTime.parse(initNotifyTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")); // Chuyển đổi thành LocalDateTime
-//        LocalDateTime now = LocalDateTime.now();
-//
-//        Duration durationNotify = Duration.between(initTime, now);
-//        long days = durationNotify.toDays();
-//
-//        // Loại bỏ số ngày khỏi khoảng thời gian
-//        durationNotify = durationNotify.minusDays(days);
-//
-//        long hours = durationNotify.toHours(); // Lấy số giờ
-//        long minutes = durationNotify.toMinutesPart(); // Lấy số phút
-//        long seconds = durationNotify.toSecondsPart(); // Lấy số giây
-//
-//        StringBuilder result = new StringBuilder();
-//
-//        if (days > 0)
-//        {
-//            result.append(days).append(" ngày ");
-//        }
-//        if (hours > 0)
-//        {
-//            result.append(hours).append(" giờ ");
-//        }
-//        if (minutes > 0)
-//        {
-//            result.append(minutes).append(" phút ");
-//        }
-//        if (seconds > 0 || result.length() == 0)
-//        {
-//            result.append(seconds).append(" giây ");
-//        }
-//        result.append("trước");
-//
-//        return result.toString();
-//    }
 
 }

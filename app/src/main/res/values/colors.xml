@@ -8,5 +8,6 @@
     <color name="colorPrimaryDark">#000d3d</color>
     <color name="colorAccent">#c2bdbf</color>
     <color name="colorBlack">#000000</color>
-
+    <color name="colorGitDark">#041626</color>
+    <color name="colorBoringLime">#1e8eab</color>
 </resources>

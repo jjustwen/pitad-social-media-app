@@ -46,7 +46,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         final Notification notification = mNotifications.get(position);
         holder.content.setText(notification.getNotifyContent());
-        holder.duration_notify.setText(notification.getNotifyDuration());
+        holder.duration_notify.setText("lúc "+ notification.getNotifyTime());
         if (notification.getUserid_interaction().equals(""))
         {
             getUserInfo(holder.image_profile, holder.username, notification.getUserid());

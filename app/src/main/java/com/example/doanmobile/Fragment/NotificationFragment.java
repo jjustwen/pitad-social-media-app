@@ -72,7 +72,11 @@ public class NotificationFragment extends Fragment
                         for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments())
                         {
                             Notification notification = documentSnapshot.toObject(Notification.class);
-                            if (notification.getUserid().equals(currentUserID) || usr.getFollowing().contains(notification.getUserid()))
+                            if (notification.getUserid().equals(currentUserID) && !notification.getUserid_interaction().equals(""))
+                            {
+                                notificationList.add(notification);
+                            }
+                            else if (usr.getFollowing().contains(notification.getUserid()) && notification.getUserid_interaction().equals(""))
                             {
                                 notificationList.add(notification);
                             }

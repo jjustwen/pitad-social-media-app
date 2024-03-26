@@ -19,15 +19,18 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/lugu" />
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/fashion_logo" />
 
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/baseline_alternate_email_24"
             android:background="@color/white"
-            android:hint="Tên đăng nhập"
+            android:hint="Email"
+            android:textColor="#000"
+            android:drawablePadding="10dp"
             android:inputType="textEmailAddress"
             android:padding="10dp" />
 
@@ -36,8 +39,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/baseline_key_24"
+            android:drawablePadding="10dp"
             android:background="@color/white"
             android:hint="Mật khẩu"
+            android:textColor="#000"
             android:inputType="textPassword"
             android:padding="10dp" />
 

@@ -39,6 +39,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.UUID;
@@ -245,7 +246,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                         if (id == R.id.edit)
                         {
                             editPost(post.getPostid());
-                            notifyDataSetChanged();
                             return true;
                         }
                         else if (id == R.id.delete)
@@ -260,7 +260,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                                             @Override
                                             public void onSuccess(Void aVoid)
                                             {
-                                                Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Đã xóa!", Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener()
@@ -268,7 +268,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                                             @Override
                                             public void onFailure(@NonNull Exception e)
                                             {
-                                                Toast.makeText(context, "Failed to delete post.", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(context, "Lỗi xóa", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                 db.collection("Users").document(curUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
@@ -281,17 +281,30 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                                         db.collection("Users").document(usr.getId()).set(usr);
                                     }
                                 });
-                                notifyDataSetChanged();
+                                db.collection("Notifications").whereEqualTo("postid", post.getPostid()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                                {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                    {
+
+                                        for (DocumentSnapshot documentSnapshot : task.getResult().getDocuments())
+                                        {
+                                            Notification notification = documentSnapshot.toObject(Notification.class);
+                                            db.collection("Notifications").document(notification.getNotifyid()).delete();
+                                        }
+                                    }
+                                });
+                                notifyItemChanged(position);
                             }
                             else
                             {
-                                Toast.makeText(context, "You can't delete this post.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "bạn không thể xóa bài viết này", Toast.LENGTH_SHORT).show();
                             }
                             return true;
                         }
                         else if (id == R.id.report)
                         {
-                            Toast.makeText(context, "Report Sent!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context, "Gửi báo cáo thành công!", Toast.LENGTH_SHORT).show();
                             return true;
                         }
                         else

@@ -94,8 +94,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@color/white"
+            android:textColor="#000"
             android:hint="Họ và tên"
-            android:inputType="textEmailAddress"
             android:padding="10dp" />
 
         <EditText
@@ -103,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
+            android:textColor="#000"
             android:background="@color/white"
             android:hint="Tên hiển thị"
             android:padding="10dp" />
@@ -113,6 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:background="@color/white"
+            android:textColor="#000"
             android:hint="Tiểu sử"
             android:padding="10dp" />
 

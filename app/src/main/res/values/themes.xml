@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.DoAnMobile" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your light theme here. -->
@@ -6,4 +6,9 @@
     </style>
 
     <style name="Theme.DoAnMobile" parent="Base.Theme.DoAnMobile" />
+
+    <style name="Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">#140626</item>
+        <item name="android:icon">@drawable/pitad</item>
+    </style>
 </resources>

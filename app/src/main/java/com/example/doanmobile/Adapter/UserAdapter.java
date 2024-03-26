@@ -73,8 +73,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
             if (user.getFollower().contains(curUserID))
             {
                 holder.btn_follow_user.setText("FOLLOWED");
-                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#120460"));
-                holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
+                holder.btn_follow_user.setBackgroundColor(Color.parseColor("#0842A0"));
+                holder.btn_follow_user.setTextColor(Color.parseColor("#1e8eab"));
             }
             else
             {
@@ -137,8 +137,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                             db.collection("Notifications").document(notifyID).set(followNotify);
                             usr.getFollower().add(curUserID);
                             holder.btn_follow_user.setText("FOLLOWED");
-                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#120460"));
-                            holder.btn_follow_user.setTextColor(Color.parseColor("#ffffff"));
+                            holder.btn_follow_user.setBackgroundColor(Color.parseColor("#0842A0"));
+                            holder.btn_follow_user.setTextColor(Color.parseColor("#1e8eab"));
                         }
 
                         db.collection("Users").document(usr.getId()).set(usr);

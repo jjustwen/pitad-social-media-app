@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.doanmobile.Adapter.MyFotoAdapter;
 import com.example.doanmobile.EditProfileActivity;
 import com.example.doanmobile.FollowerActivity;
+import com.example.doanmobile.FollowingActivity;
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
@@ -124,17 +125,16 @@ public class ProfileFragment extends Fragment
             }
         });
 
-//        following.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(getContext(), FollowersActivity.class);
-//                intent.putExtra("id", profileid);
-//                intent.putExtra("title", "Following");
-//                startActivity(intent);
-//            }
-//        });
+        following.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), FollowingActivity.class);
+                intent.putExtra("id", profileid);
+                startActivity(intent);
+            }
+        });
 
         if (!profileid.equals(curUserID))
         {
@@ -171,8 +171,8 @@ public class ProfileFragment extends Fragment
                             {
                                 usr.getFollower().remove(curUserID);
                                 btn_follow.setText("FOLLOW");
-                                btn_follow.setBackgroundColor(Color.parseColor("#666bba"));
-                                btn_follow.setTextColor(Color.parseColor("#f6ceb4"));
+                                btn_follow.setBackgroundColor(Color.parseColor("#1e8eab"));
+                                btn_follow.setTextColor(Color.parseColor("#ffffff"));
                             }
                             else
                             {
@@ -181,8 +181,8 @@ public class ProfileFragment extends Fragment
                                 db.collection("Notifications").document(notifyID).set(followNotify);
                                 usr.getFollower().add(curUserID);
                                 btn_follow.setText("FOLLOWED");
-                                btn_follow.setBackgroundColor(Color.parseColor("#f6ceb4"));
-                                btn_follow.setTextColor(Color.parseColor("#666bba"));
+                                btn_follow.setBackgroundColor(Color.parseColor("#0842A0"));
+                                btn_follow.setTextColor(Color.parseColor("#1e8eab"));
                             }
 
                             db.collection("Users").document(usr.getId()).set(usr);
@@ -252,14 +252,14 @@ public class ProfileFragment extends Fragment
                                     if (user.getFollower().contains(String.valueOf(firebaseUser.getUid())))
                                     {
                                         btn_follow.setText("FOLLOWED");
-                                        btn_follow.setBackgroundColor(Color.parseColor("#f6ceb4"));
-                                        btn_follow.setTextColor(Color.parseColor("#666bba"));
+                                        btn_follow.setBackgroundColor(Color.parseColor("#0842A0"));
+                                        btn_follow.setTextColor(Color.parseColor("#1e8eab"));
                                     }
                                     else
                                     {
                                         btn_follow.setText("FOLLOW");
-                                        btn_follow.setBackgroundColor(Color.parseColor("#666bba"));
-                                        btn_follow.setTextColor(Color.parseColor("#f6ceb4"));
+                                        btn_follow.setBackgroundColor(Color.parseColor("#1e8eab"));
+                                        btn_follow.setTextColor(Color.parseColor("#ffffff"));
 
                                     }
 
