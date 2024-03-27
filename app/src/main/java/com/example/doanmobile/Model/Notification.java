@@ -12,6 +12,7 @@ public class Notification
     private String userid_interaction;
     private String notifyContent;
     private String postid;
+    private int stt;
 
     public String getNotifyTime()
     {
@@ -81,7 +82,7 @@ public class Notification
         // Cần có constructor mặc định để deserialize từ Firestore
     }
 
-    public Notification(String notifyid, String userid, String userid_interaction, String notifyContent, String postid)
+    public Notification(String notifyid, String userid, String userid_interaction, String notifyContent, String postid, int stt)
     {
         this.notifyid = notifyid;
         this.userid = userid;
@@ -91,8 +92,6 @@ public class Notification
         Date time = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         this.notifyTime = dateFormat.format(time);
+        this.stt = stt;
     }
-
-
-
 }

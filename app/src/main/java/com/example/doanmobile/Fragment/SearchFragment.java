@@ -80,7 +80,7 @@ public class SearchFragment extends Fragment
                                 {
 
                                     User people = documentSnapshot.toObject(User.class);
-                                    if (!me.getFollowing().contains(people.getId()))
+                                    if (!me.getFollowing().contains(people.getId()) && !people.getId().equals(curUserID))
                                     {
                                         mUsers.add(people);
                                     }

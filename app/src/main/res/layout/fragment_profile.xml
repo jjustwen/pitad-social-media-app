@@ -167,7 +167,7 @@
                         android:id="@+id/btn_follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#004696"
+                        android:background="#1e8eab"
                         android:text="FOLLOW"
                         android:textColor="#fff"
                         android:textSize="15sp"

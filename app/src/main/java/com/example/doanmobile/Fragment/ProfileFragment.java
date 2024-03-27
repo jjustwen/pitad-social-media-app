@@ -176,15 +176,22 @@ public class ProfileFragment extends Fragment
                             }
                             else
                             {
+                                //Thêm thông báo theo dõi
                                 String notifyID = UUID.randomUUID().toString();
-                                Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn", "");
-                                db.collection("Notifications").document(notifyID).set(followNotify);
+                                db.collection("Notifications").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                                {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                    {
+                                        Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn", "", task.getResult().size() + 1);
+                                        db.collection("Notifications").document(notifyID).set(followNotify);
+                                    }
+                                });
                                 usr.getFollower().add(curUserID);
                                 btn_follow.setText("FOLLOWED");
                                 btn_follow.setBackgroundColor(Color.parseColor("#0842A0"));
                                 btn_follow.setTextColor(Color.parseColor("#1e8eab"));
                             }
-
                             db.collection("Users").document(usr.getId()).set(usr);
                             userInfo();
                         }

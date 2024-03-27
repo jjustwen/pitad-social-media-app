@@ -3,6 +3,7 @@ package com.example.doanmobile.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.doanmobile.Fragment.PostDetailFragment;
 import com.example.doanmobile.Fragment.ProfileFragment;
+import com.example.doanmobile.LikeActivity;
 import com.example.doanmobile.Model.Notification;
 import com.example.doanmobile.Model.Post;
 import com.example.doanmobile.Model.User;
@@ -104,6 +106,16 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
         {
             holder.heart.setImageResource(R.drawable.ic_heart);
         }
+        holder.likes.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(context, LikeActivity.class);
+                intent.putExtra("postid", post.getPostid());
+                context.startActivity(intent);
+            }
+        });
         db.collection("Users").document(curUserID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>()
         {
             @Override
@@ -158,8 +170,17 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                     if (!post.getPublisher().equals(curUserID))
                     {
                         String heart_notify_id = UUID.randomUUID().toString();
-                        Notification heart_notify = new Notification(heart_notify_id, post.getPublisher(), curUserID, "thích bài viết của bạn", post.getPostid());
-                        db.collection("Notifications").document(heart_notify_id).set(heart_notify);
+                        //thêm 1 thông báo like vào collection "Notifications"
+                        db.collection("Notifications").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task)
+                            {
+                                Notification heart_notify = new Notification(heart_notify_id, post.getPublisher(), curUserID, "thích bài viết của bạn", post.getPostid(), task.getResult().size() + 1);
+                                db.collection("Notifications").document(heart_notify_id).set(heart_notify);
+                            }
+                        });
+
                     }
                     post.getLike().add(curUserID);
                     holder.heart.setImageResource(R.drawable.ic_heart_after);
@@ -294,7 +315,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>
                                         }
                                     }
                                 });
-                                notifyItemChanged(position);
+                                post_list.remove(post);
+                                notifyDataSetChanged();
                             }
                             else
                             {

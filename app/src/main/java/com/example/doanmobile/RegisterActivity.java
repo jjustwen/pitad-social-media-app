@@ -37,7 +37,6 @@ public class RegisterActivity extends AppCompatActivity
     private ProgressDialog pd;
     private DatabaseReference reference;
     private FirebaseFirestore db;
-    private Button usernameCheck;
     private TextView usernameStatus;
 
 
@@ -66,14 +65,6 @@ public class RegisterActivity extends AppCompatActivity
             }
         });
 
-//        usernameCheck.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                checkUsernameAvailability();
-//            }
-//        });
         register.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -109,7 +100,8 @@ public class RegisterActivity extends AppCompatActivity
 
     private void RegisterUser(final String username, final String fullname, String email, String password)
     {
-        checkUsernameAvailability();
+
+
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>()
@@ -149,13 +141,46 @@ public class RegisterActivity extends AppCompatActivity
         });
     }
 
+    private void checkEmailAvailable()
+    {
+        final String txt_email = email.getText().toString();
+        usernameStatus.setVisibility(View.VISIBLE);
+        db = FirebaseFirestore.getInstance();
+        db.collection("Users").whereEqualTo("email", txt_email).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task)
+            {
+                if (task.isSuccessful())
+                {
+                    if (!task.getResult().isEmpty())
+                    {
+                        usernameFlag = 1;
+                        usernameStatus.setText("Không thể sử dụng");
+                        Toast.makeText(RegisterActivity.this, "Email đã tồn tại, hãy thử Email khác!", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+                    else
+                    {
+                        usernameStatus.setText("Có thể sử dụng");
+                        usernameFlag = 0;
+                    }
+                }
+                else
+                {
+                    Toast.makeText(RegisterActivity.this, "Đã xảy ra lỗi khi kiểm tra email nguười dùng: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    finish();
+                }
+            }
+        });
+    }
+
     private void checkUsernameAvailability()
     {
 
         final String txt_username = username.getText().toString();
 
         usernameStatus.setVisibility(View.VISIBLE);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
         db.collection("Users")
                 .whereEqualTo("username", txt_username)
                 .get()

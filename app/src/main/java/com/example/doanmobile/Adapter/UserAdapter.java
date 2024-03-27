@@ -26,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.List;
 import java.util.UUID;
@@ -86,13 +87,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
 
         holder.username.setText(user.getUsername());
         holder.fullname.setText(user.getFullname());
-        if (user.getImageurl() != null)
+        if (user.getImageurl().equals("default"))
         {
-            Glide.with(mContext).load(user.getImageurl()).into(holder.image_profile);
+            holder.image_profile.setImageResource(R.drawable.default_avatar);
         }
         else
         {
-            holder.image_profile.setImageResource(R.drawable.default_avatar);
+            Glide.with(mContext).load(user.getImageurl()).into(holder.image_profile);
         }
         holder.btn_follow_user.setOnClickListener(new View.OnClickListener()
         {
@@ -132,15 +133,24 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
                         }
                         else
                         {
+                            //Thêm thông báo theo dõi vào collection
                             String notifyID = UUID.randomUUID().toString();
-                            Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn", "");
-                            db.collection("Notifications").document(notifyID).set(followNotify);
+                            db.collection("Notifications").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
+                            {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task)
+                                {
+                                    Notification followNotify = new Notification(notifyID, usr.getId(), curUserID, "đã theo dõi bạn", "", task.getResult().size() + 1);
+                                    db.collection("Notifications").document(notifyID).set(followNotify);
+                                }
+                            });
+
+                            //Thêm số người theo dõi cho user
                             usr.getFollower().add(curUserID);
                             holder.btn_follow_user.setText("FOLLOWED");
                             holder.btn_follow_user.setBackgroundColor(Color.parseColor("#0842A0"));
                             holder.btn_follow_user.setTextColor(Color.parseColor("#1e8eab"));
                         }
-
                         db.collection("Users").document(usr.getId()).set(usr);
                     }
                 });
@@ -188,7 +198,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder>
         public ViewHolder(@NonNull View itemView)
         {
             super(itemView);
-
             username = itemView.findViewById(R.id.username);
             fullname = itemView.findViewById(R.id.fullname);
             image_profile = itemView.findViewById(R.id.image_profile);
